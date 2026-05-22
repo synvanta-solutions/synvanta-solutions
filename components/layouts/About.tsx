@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ArrowRight, Zap, Users, Globe, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 // ── Section data ──────────────────────────────────────────────────────────────
 const sections = [
@@ -83,7 +84,7 @@ export default function AboutPage() {
 
       {/* ── Sticky scroll narrative ───────────────────────────────────────── */}
       <section className="relative">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-8 sm:py-12 lg:py-20">
           <div className="lg:grid lg:grid-cols-2 lg:gap-16">
 
             {/* LEFT — scrolling text panels */}
@@ -91,47 +92,115 @@ export default function AboutPage() {
               {sections.map((s, i) => {
                 const Icon = s.icon;
                 return (
-                  <div
+                  <motion.div
                     key={s.id}
                     ref={(el) => { sectionRefs.current[i] = el; }}
                     className="min-h-[80vh] flex flex-col justify-center py-16"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{
+                      duration: 0.8,
+                      ease: [0.21, 0.47, 0.32, 0.98],
+                    }}
                   >
-                    <Badge
-                      variant="secondary"
-                      className="mb-5 w-fit text-xs tracking-widest uppercase"
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.1,
+                        ease: [0.21, 0.47, 0.32, 0.98],
+                      }}
                     >
-                      <Icon className="mr-1.5 h-3 w-3" />
-                      {s.badge}
-                    </Badge>
+                      <Badge
+                        variant="secondary"
+                        className="mb-5 w-fit text-xs tracking-widest uppercase"
+                      >
+                        <Icon className="mr-1.5 h-3 w-3" />
+                        {s.badge}
+                      </Badge>
+                    </motion.div>
 
-                    <h2
+                    <motion.h2
                       className={cn(
                         "text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl whitespace-pre-line transition-colors duration-500",
                         activeIndex === i
                           ? "text-foreground"
                           : "text-muted-foreground"
                       )}
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.7,
+                        delay: 0.15,
+                        ease: [0.21, 0.47, 0.32, 0.98],
+                      }}
                     >
                       {s.heading}
-                    </h2>
+                    </motion.h2>
 
-                    <Separator className="my-6 w-16" />
+                    <motion.div
+                      initial={{ scaleX: 0, opacity: 0 }}
+                      whileInView={{ scaleX: 1, opacity: 1 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.2,
+                        ease: [0.21, 0.47, 0.32, 0.98],
+                      }}
+                      style={{ originX: 0 }}
+                    >
+                      <Separator className="my-6 w-16" />
+                    </motion.div>
 
-                    <p className="text-muted-foreground leading-relaxed text-base max-w-md">
+                    <motion.p
+                      className="text-muted-foreground leading-relaxed text-base max-w-md"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.25,
+                        ease: [0.21, 0.47, 0.32, 0.98],
+                      }}
+                    >
                       {s.body}
-                    </p>
+                    </motion.p>
 
-                    <div className="mt-8">
+                    <motion.div
+                      className="mt-8"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.3,
+                        ease: [0.21, 0.47, 0.32, 0.98],
+                      }}
+                    >
                       <Link href={s.cta.href}>
                         <Button className="h-12 cursor-pointer px-8 md:h-14 md:px-10 flex items-center gap-2">
                           {s.cta.label}{" "}
                           <ArrowRight className="h-4 w-4" />
                         </Button>
                       </Link>
-                    </div>
+                    </motion.div>
 
                     {/* progress dots — mobile only */}
-                    <div className="mt-10 flex gap-2 lg:hidden">
+                    <motion.div
+                      className="mt-10 flex gap-2 lg:hidden"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.35,
+                        ease: [0.21, 0.47, 0.32, 0.98],
+                      }}
+                    >
                       {sections.map((_, di) => (
                         <span
                           key={di}
@@ -143,8 +212,8 @@ export default function AboutPage() {
                           )}
                         />
                       ))}
-                    </div>
-                  </div>
+                    </motion.div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -152,10 +221,19 @@ export default function AboutPage() {
             {/* RIGHT — sticky image panel (desktop only) */}
             <div className="hidden lg:block">
               <div className="sticky top-20 flex flex-col justify-center gap-4 lg:pt-10">
-                <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden bg-muted"
+                <motion.div
+                  className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden bg-muted"
                   style={{
                     boxShadow: `0 20px 60px -10px ${active.accent}40, 0 0 80px -20px ${active.accent}30`
-                  }}>
+                  }}
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: false, amount: 0.3 }}
+                  transition={{
+                    duration: 0.7,
+                    ease: [0.21, 0.47, 0.32, 0.98],
+                  }}
+                >
                   {sections.map((s, i) => (
                     <Image
                       key={s.id}
@@ -217,7 +295,7 @@ export default function AboutPage() {
                       {active.badge}
                     </span>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
 

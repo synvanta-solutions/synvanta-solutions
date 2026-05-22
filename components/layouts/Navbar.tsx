@@ -7,16 +7,25 @@ import { MenuIcon, XIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const NAV_ITEMS = [
-  { title: 'About Us', href: '#' },
-  { title: 'Products', href: '#' },
-  { title: 'Services', href: '#' },
-  { title: 'Pricing', href: '#' },
+  { title: 'Products', href: '#products' },
+  { title: 'About Us', href: '#about' },
+  { title: 'Services', href: '#services' },
+  { title: 'Process', href: '#process' },
 ]
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const mid = Math.ceil(NAV_ITEMS.length / 2)
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const element = document.querySelector(href)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    if (mobileOpen) setMobileOpen(false)
+  }
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -27,6 +36,9 @@ export default function Navbar() {
   }, [mobileOpen])
 
   useEffect(() => {
+    // Enable smooth scroll behavior on html element
+    document.documentElement.style.scrollBehavior = 'smooth'
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
     }
@@ -44,18 +56,19 @@ export default function Navbar() {
           {/* Left nav - Hidden on tablet/mobile */}
           <nav className="hidden flex-1 items-center justify-end gap-8 text-md text-foreground lg:flex">
             {NAV_ITEMS.slice(0, mid).map(({ title, href }) => (
-              <Link
+              <a
                 key={title}
                 href={href}
-                className="transition-colors hover:text-foreground/70"
+                onClick={(e) => handleNavClick(e, href)}
+                className="transition-colors hover:text-foreground/70 cursor-pointer"
               >
                 {title}
-              </Link>
+              </a>
             ))}
           </nav>
 
           {/* Logo */}
-          <a href="#" aria-label="Synvanta home" className="shrink-0 px-3 lg:px-6">
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }} aria-label="Synvanta home" className="shrink-0 px-3 lg:px-6 cursor-pointer">
             <Image
               src="/navbar.png"
               alt="Synvanta"
@@ -70,13 +83,14 @@ export default function Navbar() {
           <div className="flex flex-1 items-center justify-end gap-4 lg:justify-start lg:gap-8">
             <nav className="hidden flex-1 items-center gap-8 text-md text-foreground lg:flex">
               {NAV_ITEMS.slice(mid).map(({ title, href }) => (
-                <Link
+                <a
                   key={title}
                   href={href}
-                  className="transition-colors hover:text-foreground/70"
+                  onClick={(e) => handleNavClick(e, href)}
+                  className="transition-colors hover:text-foreground/70 cursor-pointer"
                 >
                   {title}
-                </Link>
+                </a>
               ))}
             </nav>
 
@@ -121,14 +135,14 @@ export default function Navbar() {
       >
         <div className="space-y-1 p-4">
           {NAV_ITEMS.map(({ title, href }) => (
-            <Link
+            <a
               key={title}
               href={href}
-              onClick={closeMobileMenu}
-              className="block rounded-md px-4 py-3 text-md text-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+              onClick={(e) => handleNavClick(e, href)}
+              className="block rounded-md px-4 py-3 text-md text-foreground transition-colors hover:bg-primary/10 hover:text-primary cursor-pointer"
             >
               {title}
-            </Link>
+            </a>
           ))}
         </div>
         <div className="border-t border-border/60 p-4">

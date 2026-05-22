@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Zap, ArrowRight, Sparkles, ChevronDown } from "lucide-react"
+import { Zap, ArrowRight, Sparkles } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
