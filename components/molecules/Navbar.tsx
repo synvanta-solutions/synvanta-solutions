@@ -1,42 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MenuIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import {
-  useProjectForm,
-  type UseProjectFormReturn,
-} from "@/hooks/useProjectForm";
+import ProjectDialog from "@/components/atoms/ProjectDialog";
+import { useProjectForm } from "@/hooks/useProjectForm";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const NAV_ITEMS = [
-  { title: 'Products', href: '#products' },
-  { title: 'About Us', href: '#about' },
-  { title: 'Services', href: '#services' },
-  { title: 'Process', href: '#process' },
-]
+  { title: "About Us", href: "#about" },
+  { title: "Products", href: "#products" },
+  { title: "Services", href: "#services" },
+  { title: "Process", href: "#process" },
+];
+
+// Split index for the logo-centered desktop layout (nav items flank the logo)
+const NAV_SPLIT_INDEX = Math.ceil(NAV_ITEMS.length / 2);
+
+// ─── Navbar ───────────────────────────────────────────────────────────────────
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -44,15 +29,6 @@ export default function Navbar() {
 
   // All form state and logic lives in the hook — Navbar only wires the dialog
   const form = useProjectForm();
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-    if (mobileOpen) setMobileOpen(false)
-  }
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -63,15 +39,28 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   useEffect(() => {
-    // Enable smooth scroll behavior on html element
-    document.documentElement.style.scrollBehavior = 'smooth'
-    
     const handleScroll = () => setIsScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const closeMobileMenu = () => setMobileOpen(false);
+
+  const handleNavClick =
+    (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      if (!href.startsWith("#")) return;
+      event.preventDefault();
+      const target = document.querySelector(href);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      closeMobileMenu();
+    };
+
+  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    closeMobileMenu();
+  };
 
   return (
     <>
@@ -87,24 +76,24 @@ export default function Navbar() {
         >
           {/* Left nav — first half of NAV_ITEMS */}
           <nav className="hidden flex-1 items-center justify-end gap-8 text-md text-foreground lg:flex">
-            {NAV_ITEMS.slice(0, NAV_SPLIT_INDEX).map(({ title, href }) => (
+              {NAV_ITEMS.slice(0, NAV_SPLIT_INDEX).map(({ title, href }) => (
               <Link
                 key={title}
                 href={href}
-                onClick={(e) => handleNavClick(e, href)}
-                className="transition-colors hover:text-foreground/70 cursor-pointer"
+                  onClick={handleNavClick(href)}
+                className="transition-colors hover:text-foreground/70"
               >
                 {title}
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* Logo */}
-          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }} aria-label="Synvanta home" className="shrink-0 px-3 lg:px-6 cursor-pointer">
           <a
             href="#"
             aria-label="Synvanta home"
             className="shrink-0 px-3 lg:px-6"
+            onClick={handleLogoClick}
           >
             <Image
               src="/navbar.png"
@@ -123,11 +112,11 @@ export default function Navbar() {
                 <Link
                   key={title}
                   href={href}
-                  onClick={(e) => handleNavClick(e, href)}
-                  className="transition-colors hover:text-foreground/70 cursor-pointer"
+                  onClick={handleNavClick(href)}
+                  className="transition-colors hover:text-foreground/70"
                 >
                   {title}
-                </a>
+                </Link>
               ))}
             </nav>
 
@@ -186,14 +175,14 @@ export default function Navbar() {
       >
         <div className="space-y-1 p-4">
           {NAV_ITEMS.map(({ title, href }) => (
-            <a
+            <Link
               key={title}
               href={href}
-              onClick={(e) => handleNavClick(e, href)}
-              className="block rounded-md px-4 py-3 text-md text-foreground transition-colors hover:bg-primary/10 hover:text-primary cursor-pointer"
+              onClick={handleNavClick(href)}
+              className="block rounded-md px-4 py-3 text-md text-foreground transition-colors hover:bg-primary/10 hover:text-primary"
             >
               {title}
-            </a>
+            </Link>
           ))}
         </div>
 

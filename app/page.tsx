@@ -1,11 +1,11 @@
-import Navbar from "@/components/layouts/Navbar";
-import Hero from "@/components/layouts/Hero";
-import Products from "@/components/layouts/Products";
-import PromoBanner from "@/components/layouts/PromoBanner";
-import About from "@/components/layouts/About";
-import Services from "@/components/layouts/Services";
-import Process from "@/components/layouts/Process";
-import Footer from "@/components/layouts/Footer";
+import Navbar from "@/components/molecules/Navbar";
+import Hero from "@/components/organisms/Hero";
+import Products from "@/components/organisms/Products";
+import PromoBanner from "@/components/atoms/PromoBanner";
+import About from "@/components/organisms/About";
+import Services from "@/components/organisms/Services";
+import Process from "@/components/organisms/Process";
+import Footer from "@/components/molecules/Footer";
 
 export default function Home() {
   return (
