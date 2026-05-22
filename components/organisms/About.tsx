@@ -27,7 +27,7 @@ const sections = [
     badge: "The Team",
     heading: "Builders who\nship fast.",
     body: "Behind every Synvanta product is a tight crew of engineers, designers, and strategists obsessed with craft. No committees, no bloat — just focused people who care deeply about the quality of what they hand you.",
-    cta: { label: "Meet the Team", href: "/team" },
+    cta: { label: "Check the Process", href: "/process" },
     icon: Users,
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop",
     accent: "hsl(var(--primary) / 0.75)",

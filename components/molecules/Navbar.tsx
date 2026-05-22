@@ -12,10 +12,10 @@ import { useProjectForm } from "@/hooks/useProjectForm";
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const NAV_ITEMS = [
-  { title: "About Us", href: "#about" },
   { title: "Products", href: "#products" },
-  { title: "Services", href: "#services" },
   { title: "Process", href: "#process" },
+  { title: "About Us", href: "#about" },
+  { title: "Services", href: "#services" },
 ];
 
 // Split index for the logo-centered desktop layout (nav items flank the logo)
@@ -76,11 +76,11 @@ export default function Navbar() {
         >
           {/* Left nav — first half of NAV_ITEMS */}
           <nav className="hidden flex-1 items-center justify-end gap-8 text-md text-foreground lg:flex">
-              {NAV_ITEMS.slice(0, NAV_SPLIT_INDEX).map(({ title, href }) => (
+            {NAV_ITEMS.slice(0, NAV_SPLIT_INDEX).map(({ title, href }) => (
               <Link
                 key={title}
                 href={href}
-                  onClick={handleNavClick(href)}
+                onClick={handleNavClick(href)}
                 className="transition-colors hover:text-foreground/70"
               >
                 {title}

@@ -16,14 +16,14 @@ export default function Home() {
       <div id="products" className="scroll-mt-20">
         <Products />
       </div>
+      <div id="process" className="scroll-mt-20">
+        <Process />
+      </div>
       <div id="about" className="scroll-mt-20">
         <About />
       </div>
       <div id="services" className="scroll-mt-20">
         <Services />
-      </div>
-      <div id="process" className="scroll-mt-20">
-        <Process />
       </div>
       <Footer />
     </>
