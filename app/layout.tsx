@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { ChatWidgetWrapper } from "@/components/organisms/ChatWidgetWrapper";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -31,7 +32,10 @@ export default function RootLayout({
       className={`${jakarta.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children} <Toaster />
+        {children}
+        {/* With your own AI API */}
+        <ChatWidgetWrapper />
+        <Toaster />
       </body>
     </html>
   );
