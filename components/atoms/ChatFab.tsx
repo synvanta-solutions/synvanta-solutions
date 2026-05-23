@@ -2,13 +2,16 @@
 
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageCircle } from "lucide-react";
+import { X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 
 interface ChatFabProps {
   isOpen: boolean;
   onClick: () => void;
   className?: string;
   hasUnread?: boolean;
+  showTooltip?: boolean;
 }
 
 export function ChatFab({
@@ -16,119 +19,140 @@ export function ChatFab({
   onClick,
   className,
   hasUnread = false,
+  showTooltip = true,
 }: ChatFabProps) {
+  const [isTooltipDismissed, setIsTooltipDismissed] = useState(false);
+  const [tipIndex, setTipIndex] = useState(0);
+
+  const tipMessages = useMemo(
+    () => [
+      "I'll answer what you need.",
+      "Ask anything about Synvanta.",
+      "Quick replies, no waiting.",
+    ],
+    [],
+  );
+
+  useEffect(() => {
+    if (!showTooltip || isOpen || isTooltipDismissed) return;
+    const id = setInterval(() => {
+      setTipIndex((prev) => (prev + 1) % tipMessages.length);
+    }, 2000);
+    return () => clearInterval(id);
+  }, [showTooltip, isOpen, isTooltipDismissed, tipMessages.length]);
+
   return (
-    <motion.button
-      onClick={onClick}
-      className={cn(
-        "relative flex items-center justify-center w-14 h-14 rounded-full shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-500",
-        "bg-gradient-to-br from-violet-600 to-indigo-700",
-        "hover:from-violet-500 hover:to-indigo-600 transition-colors",
-        className,
-      )}
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.94 }}
-      aria-label={isOpen ? "Close chat" : "Open chat"}
-    >
-      {/* Pulse ring when unread */}
+    <div className="relative">
+      {/* Help message bubble - now positioned to the left */}
       <AnimatePresence>
-        {hasUnread && !isOpen && (
-          <motion.span
-            key="pulse"
-            className="absolute inset-0 rounded-full bg-violet-400 opacity-60"
-            initial={{ scale: 1, opacity: 0.6 }}
-            animate={{ scale: 1.55, opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
-          />
+        {showTooltip && !isOpen && !isTooltipDismissed && (
+          <motion.div
+            key="tooltip"
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="
+              fixed bottom-25 right-6 z-50
+              flex flex-col
+              w-[200px]
+              rounded-3xl shadow-2xl shadow-black/20
+              overflow-visible
+            "
+            role="dialog"
+          >
+            <div className="relative bg-primary text-primary-foreground px-4 py-2.5 rounded-2xl shadow-lg">
+              <button
+                type="button"
+                onClick={() => setIsTooltipDismissed(true)}
+                className="absolute right-1.5 top-1.5 rounded-full p-1 text-primary-foreground/80 hover:text-primary-foreground hover:bg-primary-foreground/15"
+                aria-label="Dismiss chat tip"
+              >
+                <X size={12} />
+              </button>
+              <p className="text-sm font-medium">💬 Chat with Kevin!</p>
+              <p className="text-xs opacity-90 mt-0.5">{tipMessages[tipIndex]}</p>
+              {/* Triangle pointer - now positioned on the right side pointing to the button */}
+              <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-primary rotate-45"></div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Unread dot */}
+      {/* Unread indicator with count */}
       <AnimatePresence>
         {hasUnread && !isOpen && (
-          <motion.span
-            key="dot"
-            className="absolute top-1 right-1 w-3 h-3 rounded-full bg-rose-500 border-2 border-white"
+          <motion.div
+            key="unread-count"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-          />
+            className="absolute -top-1 -right-1 z-10 bg-rose-500 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center shadow-lg ring-2 ring-white"
+          >
+            1
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Icon swap */}
-      <AnimatePresence mode="wait" initial={false}>
-        {isOpen ? (
-          <motion.span
-            key="close"
-            initial={{ rotate: -90, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            exit={{ rotate: 90, opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            className="text-white"
-          >
-            <X size={22} strokeWidth={2.5} />
-          </motion.span>
-        ) : (
-          <motion.span
-            key="chat"
-            initial={{ rotate: 90, opacity: 0 }}
-            animate={{ rotate: 0, opacity: 1 }}
-            exit={{ rotate: -90, opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            className="text-white"
-          >
-            <BotIcon />
-          </motion.span>
+      <motion.button
+        onClick={onClick}
+        className={cn(
+          "relative flex items-center justify-center w-14 h-14 rounded-full shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary",
+          "bg-gradient-to-br from-primary to-primary/80",
+          "hover:from-primary/90 hover:to-primary/70 transition-all duration-300",
+          className,
         )}
-      </AnimatePresence>
-    </motion.button>
-  );
-}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.94 }}
+        aria-label={isOpen ? "Close chat" : "Open chat"}
+      >
+        {/* Pulse ring for attention */}
+        <AnimatePresence>
+          {hasUnread && !isOpen && (
+            <motion.span
+              key="pulse"
+              className="absolute inset-0 rounded-full bg-primary opacity-60"
+              initial={{ scale: 1, opacity: 0.6 }}
+              animate={{ scale: 1.55, opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+            />
+          )}
+        </AnimatePresence>
 
-function BotIcon() {
-  return (
-    <svg
-      width="26"
-      height="26"
-      viewBox="0 0 26 26"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {/* Head */}
-      <rect
-        x="5"
-        y="8"
-        width="16"
-        height="13"
-        rx="4"
-        fill="white"
-        fillOpacity="0.95"
-      />
-      {/* Antenna */}
-      <line
-        x1="13"
-        y1="8"
-        x2="13"
-        y2="4"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <circle cx="13" cy="3.5" r="1.5" fill="white" />
-      {/* Eyes */}
-      <circle cx="9.5" cy="14" r="1.8" fill="#6d28d9" />
-      <circle cx="16.5" cy="14" r="1.8" fill="#6d28d9" />
-      {/* Mouth */}
-      <path
-        d="M9.5 17.5 Q13 19.5 16.5 17.5"
-        stroke="#6d28d9"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        fill="none"
-      />
-    </svg>
+        {/* Icon/Image swap */}
+        <AnimatePresence mode="wait" initial={false}>
+          {isOpen ? (
+            <motion.span
+              key="close"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              className="text-primary-foreground"
+            >
+              <X size={24} strokeWidth={2.5} />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="avatar"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-white/50 ring-offset-1 ring-offset-primary/20"
+            >
+              <Image
+                src="/kevin.png"
+                alt="Kevin Synvanta"
+                width={44}
+                height={44}
+                className="w-full h-full object-cover"
+              />
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
+    </div>
   );
 }

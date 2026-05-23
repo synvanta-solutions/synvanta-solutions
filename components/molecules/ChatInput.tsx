@@ -3,7 +3,6 @@
 import { useRef, useState, KeyboardEvent } from "react";
 import { SendHorizonal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 interface ChatInputProps {
@@ -18,64 +17,58 @@ export function ChatInput({
   placeholder = "Type a message…",
 }: ChatInputProps) {
   const [value, setValue] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSend = () => {
     const trimmed = value.trim();
     if (!trimmed || disabled) return;
     onSend(trimmed);
     setValue("");
-    // Reset height
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-    }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
   };
 
-  const handleInput = () => {
-    const el = textareaRef.current;
-    if (!el) return;
-    el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
-  };
-
   return (
-    <div className="flex items-end gap-2 px-3 py-3 border-t border-border bg-background rounded-b-2xl">
-      <Textarea
-        ref={textareaRef}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        onInput={handleInput}
-        placeholder={placeholder}
-        disabled={disabled}
-        rows={1}
-        className={cn(
-          "flex-1 resize-none min-h-[38px] max-h-[120px] text-sm py-2.5 px-3",
-          "rounded-xl border-border bg-muted/60 focus-visible:ring-violet-500",
-          "leading-snug overflow-hidden",
-        )}
-      />
-      <Button
-        onClick={handleSend}
-        disabled={disabled || !value.trim()}
-        size="icon"
-        className={cn(
-          "w-9 h-9 rounded-xl flex-shrink-0 mb-0.5",
-          "bg-gradient-to-br from-violet-600 to-indigo-700",
-          "hover:from-violet-500 hover:to-indigo-600",
-          "disabled:opacity-40 transition-all",
-        )}
-        aria-label="Send message"
-      >
-        <SendHorizonal size={16} className="text-white" />
-      </Button>
+    <div className="px-3 py-3 border-t border-border bg-background rounded-b-2xl">
+      <div className="relative flex items-center">
+        <input
+          ref={inputRef}
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={cn(
+            "flex-1 w-full pr-12 pl-4 py-2.5 text-sm",
+            "rounded-full border border-border bg-muted/60",
+            "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary",
+            "placeholder:text-muted-foreground/60",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
+            "leading-snug transition-all"
+          )}
+        />
+        <Button
+          onClick={handleSend}
+          disabled={disabled || !value.trim()}
+          size="icon"
+          className={cn(
+            "absolute right-1.5 w-8 h-8 rounded-full flex-shrink-0",
+            "bg-primary to-primary/80",
+            "hover:from-primary/90 hover:to-primary/70",
+            "disabled:opacity-40 transition-all shadow-sm",
+            "cursor-pointer"
+          )}
+          aria-label="Send message"
+        >
+          <SendHorizonal size={15} className="text-primary-foreground" />
+        </Button>
+      </div>
     </div>
   );
 }

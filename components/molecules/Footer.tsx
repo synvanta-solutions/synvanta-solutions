@@ -132,7 +132,7 @@ const Footer = (props: Props) => {
               ))}
             </div>
           </div>
-          <div className="mt-8 flex flex-col justify-between gap-4 border-t border-border pt-8 text-sm font-sans font-medium text-muted-foreground md:flex-row md:items-center">
+          <div className="mt-8 flex flex-col justify-between gap-4 pt-8 text-sm font-sans font-medium text-muted-foreground md:flex-row md:items-center">
             <p>© {year} Synvanta. All rights reserved.</p>
             <div className="flex items-center gap-2">
               <span>Based on Batangas, Philippines</span>

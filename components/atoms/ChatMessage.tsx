@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { User } from "lucide-react";
+import Image from "next/image";
 
 export type MessageRole = "user" | "assistant";
 
@@ -25,62 +27,41 @@ export function ChatMessage({ message }: ChatMessageProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.22, ease: "easeOut" }}
       className={cn(
-        "flex items-end gap-2",
+        "flex items-end gap-2 px-4 first:pt-2 last:pb-2",
         isUser ? "flex-row-reverse" : "flex-row",
       )}
     >
-      {/* Avatar */}
+      {/* Assistant Avatar */}
       {!isUser && (
-        <div className="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-violet-600 to-indigo-700 flex items-center justify-center mb-0.5">
-          <BotMiniIcon />
+        <div className="flex-shrink-0 w-7 h-7 rounded-full overflow-hidden mb-0.5 border border-border">
+          <Image
+            src="/kevin.png"
+            alt="Kevin Synvanta"
+            width={28}
+            height={28}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
+      {/* User Avatar */}
+      {isUser && (
+        <div className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mb-0.5">
+          <User size={14} className="text-primary" />
         </div>
       )}
 
       {/* Bubble */}
       <div
         className={cn(
-          "max-w-[78%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed",
+          "max-w-[78%] px-3 py-2 rounded-2xl text-sm leading-relaxed",
           isUser
-            ? "bg-gradient-to-br from-violet-600 to-indigo-700 text-white rounded-br-sm"
-            : "bg-muted text-foreground rounded-bl-sm",
+            ? "bg-gradient-to-br from-primary to-primary/90 text-primary-foreground rounded-br-sm shadow-sm"
+            : "bg-muted/80 text-foreground rounded-bl-sm border border-border",
         )}
       >
         {message.content}
       </div>
     </motion.div>
-  );
-}
-
-function BotMiniIcon() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 26 26"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect
-        x="5"
-        y="8"
-        width="16"
-        height="13"
-        rx="4"
-        fill="white"
-        fillOpacity="0.95"
-      />
-      <line
-        x1="13"
-        y1="8"
-        x2="13"
-        y2="4"
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <circle cx="13" cy="3.5" r="1.5" fill="white" />
-      <circle cx="9.5" cy="14" r="1.8" fill="#6d28d9" />
-      <circle cx="16.5" cy="14" r="1.8" fill="#6d28d9" />
-    </svg>
   );
 }

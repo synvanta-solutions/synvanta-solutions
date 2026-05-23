@@ -19,7 +19,7 @@ const sections = [
     body: "Synvanta exists to collapse the gap between ambition and execution. We deliver pre-built systems that slot straight into your workflow and bespoke solutions engineered around your exact constraints — so you spend less time building infrastructure and more time changing your industry.",
     cta: { label: "Work With Us", href: "/contact" },
     icon: Zap,
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=1000&fit=crop",
     accent: "hsl(var(--primary))",
   },
   {
@@ -29,7 +29,7 @@ const sections = [
     body: "Behind every Synvanta product is a tight crew of engineers, designers, and strategists obsessed with craft. No committees, no bloat — just focused people who care deeply about the quality of what they hand you.",
     cta: { label: "Check the Process", href: "/process" },
     icon: Users,
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=1000&fit=crop",
     accent: "hsl(var(--primary) / 0.75)",
   },
   {
@@ -39,7 +39,7 @@ const sections = [
     body: "Synvanta partners with startups and enterprises across Southeast Asia and beyond. Our systems are built to scale — cloud-native from day one, localisation-ready, and wired for the markets that matter to you.",
     cta: { label: "See Case Studies", href: "/work" },
     icon: Globe,
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=1000&fit=crop",
     accent: "hsl(var(--primary) / 0.55)",
   },
   {
@@ -49,7 +49,7 @@ const sections = [
     body: "Every system we deliver is yours — fully documented, thoroughly tested, and handed over with the knowledge transfer your team needs to own it. We don't create dependency; we create capability.",
     cta: { label: "See Pricing", href: "/pricing" },
     icon: ShieldCheck,
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=1000&fit=crop",
     accent: "hsl(var(--primary) / 0.4)",
   },
 ];
@@ -68,7 +68,7 @@ export default function AboutPage() {
         ([entry]) => {
           if (entry.isIntersecting) setActiveIndex(i);
         },
-        { threshold: 0.5 }
+        { threshold: 0.3 }
       );
       obs.observe(el);
       observers.push(obs);
@@ -81,24 +81,21 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-
-      {/* ── Sticky scroll narrative ───────────────────────────────────────── */}
       <section className="relative">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-8 sm:py-12 lg:py-20">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-4 sm:py-8 lg:py-20">
           <div className="lg:grid lg:grid-cols-2 lg:gap-16">
-
             {/* LEFT — scrolling text panels */}
-            <div className="py-24 space-y-0">
+            <div className="space-y-0">
               {sections.map((s, i) => {
                 const Icon = s.icon;
                 return (
                   <motion.div
                     key={s.id}
                     ref={(el) => { sectionRefs.current[i] = el; }}
-                    className="min-h-[80vh] flex flex-col justify-center py-16"
+                    className="flex flex-col justify-center py-6 sm:py-8 lg:py-16"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
+                    viewport={{ once: true, amount: 0.3 }}
                     transition={{
                       duration: 0.8,
                       ease: [0.21, 0.47, 0.32, 0.98],
@@ -107,7 +104,7 @@ export default function AboutPage() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
+                      viewport={{ once: true, amount: 0.3 }}
                       transition={{
                         duration: 0.6,
                         delay: 0.1,
@@ -116,7 +113,7 @@ export default function AboutPage() {
                     >
                       <Badge
                         variant="secondary"
-                        className="mb-5 w-fit text-xs tracking-widest uppercase"
+                        className="mb-3 sm:mb-5 w-fit text-xs tracking-widest uppercase"
                       >
                         <Icon className="mr-1.5 h-3 w-3" />
                         {s.badge}
@@ -125,14 +122,14 @@ export default function AboutPage() {
 
                     <motion.h2
                       className={cn(
-                        "text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl whitespace-pre-line transition-colors duration-500",
+                        "text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.2] sm:leading-[1.1] tracking-tight whitespace-pre-line transition-colors duration-500",
                         activeIndex === i
                           ? "text-foreground"
                           : "text-muted-foreground"
                       )}
                       initial={{ opacity: 0, y: 15 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
+                      viewport={{ once: true, amount: 0.3 }}
                       transition={{
                         duration: 0.7,
                         delay: 0.15,
@@ -145,7 +142,7 @@ export default function AboutPage() {
                     <motion.div
                       initial={{ scaleX: 0, opacity: 0 }}
                       whileInView={{ scaleX: 1, opacity: 1 }}
-                      viewport={{ once: true, amount: 0.5 }}
+                      viewport={{ once: true, amount: 0.3 }}
                       transition={{
                         duration: 0.6,
                         delay: 0.2,
@@ -153,14 +150,14 @@ export default function AboutPage() {
                       }}
                       style={{ originX: 0 }}
                     >
-                      <Separator className="my-6 w-16" />
+                      <Separator className="my-4 sm:my-6 w-12 sm:w-16" />
                     </motion.div>
 
                     <motion.p
-                      className="text-muted-foreground leading-relaxed text-base max-w-md"
+                      className="text-muted-foreground leading-relaxed text-sm sm:text-base max-w-md"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
+                      viewport={{ once: true, amount: 0.3 }}
                       transition={{
                         duration: 0.6,
                         delay: 0.25,
@@ -171,10 +168,10 @@ export default function AboutPage() {
                     </motion.p>
 
                     <motion.div
-                      className="mt-8"
+                      className="mt-5 sm:mt-8"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.5 }}
+                      viewport={{ once: true, amount: 0.3 }}
                       transition={{
                         duration: 0.6,
                         delay: 0.3,
@@ -182,19 +179,18 @@ export default function AboutPage() {
                       }}
                     >
                       <Link href={s.cta.href}>
-                        <Button className="h-12 cursor-pointer px-8 md:h-14 md:px-10 flex items-center gap-2">
+                        <Button className="h-9 sm:h-12 cursor-pointer px-5 sm:px-8 md:h-14 md:px-10 flex items-center gap-2 text-sm sm:text-base">
                           {s.cta.label}{" "}
-                          <ArrowRight className="h-4 w-4" />
+                          <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
                         </Button>
                       </Link>
                     </motion.div>
 
-                    {/* progress dots — mobile only */}
                     <motion.div
-                      className="mt-10 flex gap-2 lg:hidden"
+                      className="mt-6 sm:mt-10 flex gap-2 lg:hidden"
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
-                      viewport={{ once: true, amount: 0.5 }}
+                      viewport={{ once: true, amount: 0.3 }}
                       transition={{
                         duration: 0.6,
                         delay: 0.35,
@@ -205,10 +201,10 @@ export default function AboutPage() {
                         <span
                           key={di}
                           className={cn(
-                            "h-1.5 rounded-full transition-all duration-300",
+                            "h-1 rounded-full transition-all duration-300",
                             di === i
-                              ? "w-6 bg-primary"
-                              : "w-1.5 bg-muted-foreground/30"
+                              ? "w-5 sm:w-6 bg-primary"
+                              : "w-1 sm:w-1.5 bg-muted-foreground/30"
                           )}
                         />
                       ))}
@@ -218,14 +214,11 @@ export default function AboutPage() {
               })}
             </div>
 
-            {/* RIGHT — sticky image panel (desktop only) */}
+            {/* RIGHT — sticky image panel */}
             <div className="hidden lg:block">
-              <div className="sticky top-20 flex flex-col justify-center gap-4 lg:pt-10">
+              <div className="sticky top-24 flex items-center justify-center min-h-[calc(100vh-6rem)]">
                 <motion.div
-                  className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden bg-muted"
-                  style={{
-                    boxShadow: `0 20px 60px -10px ${active.accent}40, 0 0 80px -20px ${active.accent}30`
-                  }}
+                  className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden"
                   initial={{ scale: 0.95, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: false, amount: 0.3 }}
@@ -234,6 +227,7 @@ export default function AboutPage() {
                     ease: [0.21, 0.47, 0.32, 0.98],
                   }}
                 >
+                  {/* Main Image */}
                   {sections.map((s, i) => (
                     <Image
                       key={s.id}
@@ -242,67 +236,102 @@ export default function AboutPage() {
                       fill
                       priority={i === 0}
                       className={cn(
-                        "object-cover transition-opacity duration-700 ease-in-out",
-                        activeIndex === i ? "opacity-100" : "opacity-0"
+                        "object-cover transition-all duration-700 ease-in-out",
+                        activeIndex === i ? "opacity-100 scale-100" : "opacity-0 scale-110"
                       )}
+                      style={{
+                        filter: activeIndex === i ? "brightness(0.95)" : "brightness(0.7)",
+                      }}
                     />
                   ))}
 
-                  {/* colour-tinted overlay that matches each section */}
+                  {/* Gradient Overlay */}
                   <div
-                    className="absolute inset-0 transition-all duration-700"
+                    className="absolute inset-0 transition-opacity duration-700"
                     style={{
-                      background: `linear-gradient(180deg, transparent 0%, ${active.accent}33 60%, ${active.accent}66 100%)`,
+                      background: `linear-gradient(135deg, ${active.accent}80 0%, transparent 50%, ${active.accent}40 100%)`,
                     }}
                   />
 
-                  {/* glow effect at bottom */}
+                  {/* Subtle border glow */}
                   <div
-                    className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-2/3 h-40 rounded-full blur-3xl transition-all duration-700"
+                    className="absolute inset-0 rounded-2xl pointer-events-none transition-all duration-700"
                     style={{
-                      background: `${active.accent}40`,
+                      boxShadow: `inset 0 0 0 1px ${active.accent}40, 0 0 0 2px ${active.accent}20`,
                     }}
                   />
 
-                 <div className="absolute bottom-6 left-6 right-6 z-20 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      {/* Accent line */}
-                      <div
-                        className="w-8 h-0.5 rounded-full"
-                        style={{ background: active.accent }}
-                      />
-                    </div>
+                  {/* Corner accents */}
+                  <div className="absolute top-4 left-4 w-12 h-12 pointer-events-none">
+                    <div
+                      className="absolute top-0 left-0 w-8 h-0.5 rounded-full transition-all duration-700"
+                      style={{ background: active.accent }}
+                    />
+                    <div
+                      className="absolute top-0 left-0 w-0.5 h-8 rounded-full transition-all duration-700"
+                      style={{ background: active.accent }}
+                    />
+                  </div>
+                  
+                  <div className="absolute bottom-4 right-4 w-12 h-12 pointer-events-none">
+                    <div
+                      className="absolute bottom-0 right-0 w-8 h-0.5 rounded-full transition-all duration-700"
+                      style={{ background: active.accent }}
+                    />
+                    <div
+                      className="absolute bottom-0 right-0 w-0.5 h-8 rounded-full transition-all duration-700"
+                      style={{ background: active.accent }}
+                    />
+                  </div>
 
-                    {/* Page indicator */}
-                    <div className="flex gap-1.5">
-                      {sections.map((_, pi) => (
+                  {/* Bottom info bar */}
+                  <motion.div
+                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    key={activeIndex}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
                         <div
-                          key={pi}
-                          className={cn(
-                            "w-1.5 h-1.5 rounded-full transition-all duration-500",
-                            pi === activeIndex ? "bg-white" : "bg-white/30",
-                          )}
+                          className="w-8 h-0.5 rounded-full"
+                          style={{ background: active.accent }}
                         />
-                      ))}
+                        <span className="text-xs font-mono text-white/80 tracking-wider">
+                          {String(activeIndex + 1).padStart(2, '0')} / {String(sections.length).padStart(2, '0')}
+                        </span>
+                      </div>
+                      <div className="flex gap-1.5">
+                        {sections.map((_, pi) => (
+                          <button
+                            key={pi}
+                            onClick={() => {
+                              sectionRefs.current[pi]?.scrollIntoView({ behavior: "smooth", block: "center" });
+                            }}
+                            className={cn(
+                              "h-1 rounded-full transition-all duration-500 cursor-pointer hover:bg-white/80",
+                              pi === activeIndex
+                                ? "w-6 bg-white"
+                                : "w-1.5 bg-white/40 hover:w-3"
+                            )}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  </motion.div>
 
-
-                  {/* floating label — inside image at bottom */}
-                  <div className="absolute bottom-4 left-25 -translate-x-1/2">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-secondary backdrop-blur-sm px-4 py-2 text-xs font-semibold tracking-widest uppercase text-secondary-foreground shadow">
-                      {(() => { const Icon = active.icon; return <Icon className="h-3.5 w-3.5" />; })()}
-                      {active.badge}
-                    </span>
-                  </div>
+                  {/* Floating accent glow behind image */}
+                  <div
+                    className="absolute -inset-4 rounded-full blur-3xl -z-10 transition-all duration-700 opacity-40"
+                    style={{ background: active.accent }}
+                  />
                 </motion.div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
-
     </main>
   );
 }
