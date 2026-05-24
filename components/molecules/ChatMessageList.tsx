@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { ChatMessage, ChatMessageData } from "@/components/atoms/ChatMessage";
 import { TypingIndicator } from "@/components/atoms/TypingIndicator";
 import { AnimatePresence } from "framer-motion";

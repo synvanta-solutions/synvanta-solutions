@@ -70,7 +70,7 @@ export function ChatFab({
               >
                 <X size={12} />
               </button>
-              <p className="text-sm font-medium">💬 Chat with Kevin!</p>
+              <p className="text-sm font-medium">👋 Chat with Kevin!</p>
               <p className="text-xs opacity-90 mt-0.5">{tipMessages[tipIndex]}</p>
               {/* Triangle pointer - now positioned on the right side pointing to the button */}
               <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-primary rotate-45"></div>

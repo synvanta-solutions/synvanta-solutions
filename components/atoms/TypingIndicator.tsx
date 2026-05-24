@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function TypingIndicator() {
   return (
-    <div className="flex items-end gap-2">
+    <div className="flex items-end gap-2 px-4">
       {/* Bot avatar */}
       <div className="flex-shrink-0 w-7 h-7 rounded-full overflow-hidden border border-border">
         <Image
