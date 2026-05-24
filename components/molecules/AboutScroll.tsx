@@ -15,9 +15,20 @@ import { ArrowRight, Globe, ShieldCheck, Users, Zap } from "lucide-react";
 import type { LucideProps } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import type { sections as SectionsType } from "./About";
 
-type Section = Omit<(typeof SectionsType)[number], "icon"> & { icon: string };
+type Section = {
+  id: string;
+  badge: string;
+  heading: string;
+  body: string;
+  image: string;
+  accent: string;
+  cta: {
+    href: string;
+    label: string;
+  };
+  icon: string;
+};
 
 const iconMap: Record<string, React.ComponentType<LucideProps>> = {
   Zap,
