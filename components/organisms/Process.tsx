@@ -68,8 +68,8 @@ const Process = () => {
                 How we build
               </h2>
               <p className="text-muted-foreground text-base leading-relaxed text-center">
-                A structured approach to turning your vision into reality. From
-                discovery to launch and beyond.
+                A structured approach to turning your vision into reality — from
+                discovery and design, through development, to launch and beyond.
               </p>
             </div>
 

@@ -44,9 +44,9 @@ export default function Hero() {
         {/* Description — crawlers read this for page relevance */}
         <div className="z-10 flex flex-col items-center justify-center space-y-6 px-6 pt-5 text-center">
           <p className="w-full max-w-2xl text-md font-light text-foreground/70 md:text-lg lg:text-xl">
-            Synvanta is a startup providing pre-built systems that seamlessly
-            integrate into your business, along with custom solutions tailored
-            to your specific needs.
+            Synvanta is a freelance-first team delivering pre-built systems and
+            custom digital solutions — websites, mobile apps, GIS platforms, and
+            AI-powered tools — engineered to slot straight into your business.
           </p>
 
           {/* Buttons */}
@@ -58,7 +58,7 @@ export default function Hero() {
             >
               <Button className="h-12 cursor-pointer px-8 md:h-14 md:px-10 flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 shadow-lg hover:shadow-primary/25">
                 <Zap className="h-4 w-4" aria-hidden="true" />
-                Ask for Demo
+                Request a Demo
               </Button>
             </Link>
             <Link href="/products" aria-label="See Synvanta products">
@@ -66,7 +66,7 @@ export default function Hero() {
                 variant="outline"
                 className="h-12 cursor-pointer px-8 md:h-14 md:px-10 flex items-center gap-2 border-primary bg-white text-foreground hover:bg-background transition-all duration-300"
               >
-                See Products
+                Browse Our Work
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Button>
             </Link>

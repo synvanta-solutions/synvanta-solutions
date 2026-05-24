@@ -14,53 +14,46 @@ export interface ServiceItem {
 
 export const servicesData: ServiceItem[] = [
   {
-    heading: "Custom Web & Business Systems",
+    heading: "Web & Mobile Development",
     descp:
-      "Build powerful digital systems tailored to your business needs. From inventory and appointment systems to school and HR management—we create solutions that scale.",
+      "Custom websites and mobile applications built for performance, scalability, and your users. From landing pages to full-scale platforms — we ship products that work.",
     image:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&h=500&fit=crop",
   },
   {
-    heading: "AI Integration for Businesses",
+    heading: "GIS & Mapping Systems",
     descp:
-      "Harness AI to automate and streamline your operations. We integrate AI-powered chatbots, content generators, and intelligent support systems.",
-    image:
-      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=500&h=500&fit=crop",
-  },
-  {
-    heading: "Website Development for SMEs",
-    descp:
-      "Modern, professional websites that convert. We combine development, design, and SEO to help your business stand out online.",
+      "Location-aware platforms and geographic data tools for logistics, urban planning, agriculture, and more. We turn spatial data into actionable, visual systems.",
     image:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&h=500&fit=crop",
   },
   {
-    heading: "UI/UX Design + Branding",
+    heading: "Business Automation",
     descp:
-      "Create stunning visual identities and user experiences. From UI mockups to branding packages—we help you make a lasting impression.",
-    image:
-      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=500&fit=crop",
-  },
-  {
-    heading: "QA Testing & Documentation",
-    descp:
-      "Ensure quality and clarity at every step. We provide comprehensive testing, test cases, user manuals, and API documentation.",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop",
-  },
-  {
-    heading: "Automation Services",
-    descp:
-      "Reduce manual work and boost efficiency. From email automation to CRM workflows—we help you work smarter, not harder.",
+      "Eliminate manual work with smart workflows, integrations, and process automation that run while you sleep. We identify the bottlenecks and engineer them away.",
     image:
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=500&h=500&fit=crop",
   },
   {
-    heading: "IoT Solutions",
+    heading: "AI Integration",
     descp:
-      "Connect your physical and digital worlds. We build smart attendance systems, environmental monitoring dashboards, and sensor networks.",
+      "Embed AI into your existing systems — chatbots, document processing, predictions, and intelligent dashboards. Practical AI that solves real business problems.",
     image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=500&h=500&fit=crop",
+  },
+  {
+    heading: "Custom CRUD Systems",
+    descp:
+      "Internal tools, admin dashboards, and data management platforms tailored to your exact operations. Built clean, handed over fully documented.",
+    image:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop",
+  },
+  {
+    heading: "UI/UX Design & Branding",
+    descp:
+      "Interfaces people actually enjoy using, paired with a visual identity that sticks. From wireframes to full branding packages — we design with purpose.",
+    image:
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&h=500&fit=crop",
   },
 ];
 

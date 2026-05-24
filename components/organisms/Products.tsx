@@ -76,8 +76,9 @@ const Products = () => {
                 Our Latest Projects
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center px-4 max-w-md sm:max-w-2xl">
-                Explore our portfolio of successful projects and innovative
-                solutions we&apos;ve delivered.
+                Explore the systems we've built — from business tools and GIS
+                platforms to AI integrations and mobile apps. Real work,
+                shipped.
               </p>
             </div>
 
