@@ -4,7 +4,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Zap } from "lucide-react";
-import ServicesGrid from "./ServicesGrid";
+import ServicesGrid from "../organisms/ServicesGrid";
 
 export interface ServiceItem {
   heading: string;

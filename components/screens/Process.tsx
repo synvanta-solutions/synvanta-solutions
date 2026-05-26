@@ -4,7 +4,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Zap } from "lucide-react";
-import ProcessCards from "./ProcessCards";
+import ProcessCards from "@/components/organisms/ProcessCards";
 
 export interface ProcessStep {
   number: string;

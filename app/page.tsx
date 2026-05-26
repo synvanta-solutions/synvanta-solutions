@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/molecules/Navbar";
-import Hero from "@/components/organisms/Hero";
-import Products from "@/components/organisms/Products";
+import Hero from "@/components/screens/Hero";
+import Products from "@/components/screens/Products";
 import PromoBanner from "@/components/atoms/PromoBanner";
-import About from "@/components/organisms/About";
-import Services from "@/components/organisms/Services";
-import Process from "@/components/organisms/Process";
+import About from "@/components/screens/About";
+import Services from "@/components/screens/Services";
+import Process from "@/components/screens/Process";
+import Team from "@/components/screens/Team";
 import Footer from "@/components/molecules/Footer";
 
 // ── Page (Server Component — no "use client") ─────────────────────────────────
@@ -34,6 +35,8 @@ export default function Home() {
         >
           <Process />
         </section>
+
+        <Team />
 
         <section
           id="about"

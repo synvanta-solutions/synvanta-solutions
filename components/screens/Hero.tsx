@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { Zap, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import HeroAnimations from "./HeroAnimations"; // client-only child
+import HeroAnimations from "@/components/organisms/HeroAnimations"; // client-only child
 
 export default function Hero() {
   return (

@@ -9,7 +9,7 @@ import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import type { Product } from "./Products";
+import type { Product } from "@/components/screens/Products";
 
 interface ProductsCarouselProps {
   products: Product[];

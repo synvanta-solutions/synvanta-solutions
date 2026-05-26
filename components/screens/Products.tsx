@@ -5,7 +5,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
-import ProductsCarousel from "./ProductsCarousel";
+import ProductsCarousel from "@/components/organisms/ProductsCarousel";
 
 export interface Product {
   id: number;

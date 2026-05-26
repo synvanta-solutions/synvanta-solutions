@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap } from "lucide-react";
 import { motion } from "framer-motion";
-import type { ServiceItem } from "./Services";
+import type { ServiceItem } from "../screens/Services";
 
 interface ServicesGridProps {
   data: ServiceItem[];
