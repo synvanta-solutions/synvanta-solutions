@@ -191,7 +191,7 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
                   sizes="(max-width: 640px) 85vw, (max-width: 1024px) 340px, 380px"
                   priority={isActive}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
 
                 {/* Category badge */}
                 <div className="absolute top-3 sm:top-5 left-3 sm:left-5 z-10">

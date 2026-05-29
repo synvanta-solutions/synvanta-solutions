@@ -6,7 +6,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import type { ProcessStep } from "./Process";
+import type { ProcessStep } from "@/components/screens/Process";
 
 interface ProcessCardsProps {
   steps: ProcessStep[];

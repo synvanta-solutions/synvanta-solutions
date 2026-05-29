@@ -74,7 +74,7 @@ function ThumbnailStrip({
           aria-label={img.caption ?? `Image ${i + 1}`}
           aria-pressed={active === i}
           className={`
-            relative flex-shrink-0 h-16 w-24 sm:h-20 sm:w-32 rounded-lg overflow-hidden
+            relative shrink-0 h-16 w-24 sm:h-20 sm:w-32 rounded-lg overflow-hidden
             ring-2 transition-all duration-200
             ${
               active === i
@@ -212,7 +212,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                 onClick={onClose}
                 aria-label="Close gallery"
                 className="
-                  flex-shrink-0 mt-0.5 w-9 h-9 sm:w-10 sm:h-10 rounded-full
+                  shrink-0 mt-0.5 w-9 h-9 sm:w-10 sm:h-10 rounded-full
                   border border-border bg-background
                   hover:bg-destructive hover:text-destructive-foreground hover:border-destructive
                   flex items-center justify-center transition-all duration-150

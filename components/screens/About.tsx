@@ -59,8 +59,6 @@ const sections = [
   },
 ];
 
-
-
 export default function AboutPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -239,7 +237,7 @@ export default function AboutPage() {
             <div className="hidden lg:block">
               <div className="sticky top-24 flex items-center justify-center min-h-[calc(100vh-6rem)]">
                 <motion.div
-                  className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden"
+                  className="relative w-full max-w-md aspect-3/4 rounded-2xl overflow-hidden"
                   initial={{ scale: 0.95, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: false, amount: 0.3 }}
@@ -312,7 +310,7 @@ export default function AboutPage() {
 
                   {/* Bottom info bar */}
                   <motion.div
-                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6"
+                    className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-6"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     key={activeIndex}
