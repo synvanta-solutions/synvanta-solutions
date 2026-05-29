@@ -2,18 +2,23 @@
 
 // ProductsCarousel.tsx — Client Component
 // All carousel state, keyboard navigation, window resize, and animations live here.
-// Product data is passed as props from the server-rendered Products.tsx.
+// Clicking the active (front) card opens the ProductModal gallery.
 
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, Expand } from "lucide-react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import type { Product } from "@/components/screens/Products";
+import ProductModal from "@/components/organisms/ProductModal";
 
 interface ProductsCarouselProps {
   products: Product[];
 }
+
+// ---------------------------------------------------------------------------
+// Spread config
+// ---------------------------------------------------------------------------
 
 const getSpreadConfig = (isMobile: boolean, isTablet: boolean) => {
   if (isMobile) {
@@ -56,11 +61,16 @@ function getSpreadPos(
   return { ...spread[spreadIdx], spreadIdx };
 }
 
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
 export default function ProductsCarousel({ products }: ProductsCarouselProps) {
   const N = products.length;
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 1024, height: 768 });
+  const [modalProduct, setModalProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     setWindowSize({ width: window.innerWidth, height: window.innerHeight });
@@ -85,177 +95,219 @@ export default function ProductsCarousel({ products }: ProductsCarouselProps) {
   );
 
   const handleCardClick = (i: number) => {
-    if (i === current || animating) return;
+    if (animating) return;
+    if (i === current) {
+      // Active card → open gallery
+      setModalProduct(products[i]);
+      return;
+    }
+    // Non-active card → rotate to front
     const offset = (((i - current) % N) + N) % N;
     advance(offset <= Math.floor(N / 2) ? offset : -(N - offset));
   };
 
+  // Arrow keys only when modal is closed
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (modalProduct) return;
       if (e.key === "ArrowLeft") advance(-1);
       if (e.key === "ArrowRight") advance(1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [advance]);
+  }, [advance, modalProduct]);
 
   const getCardDimensions = () => {
     if (isMobile)
       return {
         container: "h-[min(60vh,400px)] w-[min(85vw,280px)]",
-        card: "h-[min(60vh,400px)] w-[min(85vw,280px)] sm:h-[400px] sm:w-[280px]",
+        card: "h-[min(60vh,400px)] w-[min(85vw,280px)]",
       };
     if (isTablet)
       return {
         container: "h-[min(65vh,480px)] w-[min(85vw,340px)]",
-        card: "h-[min(65vh,480px)] w-[min(85vw,340px)] md:h-[480px] md:w-[340px]",
+        card: "h-[min(65vh,480px)] w-[min(85vw,340px)]",
       };
     return {
       container: "h-[min(70vh,560px)] w-[min(90vw,380px)]",
-      card: "h-[min(70vh,560px)] w-[min(90vw,380px)] lg:h-[560px] lg:w-[380px]",
+      card: "h-[min(70vh,560px)] w-[min(90vw,380px)]",
     };
   };
 
   const dimensions = getCardDimensions();
 
   return (
-    <div className="flex flex-col items-center gap-6 sm:gap-10 w-full">
-      {/* Card deck */}
-      <div
-        className={`relative flex items-center justify-center ${dimensions.container}`}
-        role="region"
-        aria-label="Product carousel"
-      >
-        {products.map((product, i) => {
-          const pos = getSpreadPos(i, current, spread, N);
-          if (!pos) return null;
-          const isActive = pos.spreadIdx === 2;
-
-          return (
-            <motion.div
-              key={product.id}
-              onClick={() => handleCardClick(i)}
-              animate={{
-                rotate: pos.rotate,
-                x: pos.tx,
-                y: pos.ty,
-                scale: pos.scale,
-                opacity: pos.opacity,
-                zIndex: pos.zIndex,
-              }}
-              transition={{ type: "spring", stiffness: 200, damping: 25 }}
-              className={`absolute cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl ${dimensions.card}`}
-              style={{
-                boxShadow: isActive
-                  ? "0 20px 40px rgba(0,0,0,0.25)"
-                  : "0 4px 12px rgba(0,0,0,0.1)",
-              }}
-              aria-label={
-                isActive
-                  ? `${product.name} — ${product.description}`
-                  : product.name
-              }
-              role="button"
-              tabIndex={isActive ? 0 : -1}
-            >
-              <Image
-                src={product.img}
-                alt={product.name}
-                fill
-                className="object-cover"
-                sizes="(max-width: 640px) 85vw, (max-width: 1024px) 340px, 380px"
-                priority={isActive}
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
-
-              <div className="absolute top-3 sm:top-5 left-3 sm:left-5 z-10">
-                <Badge className="bg-primary text-primary-foreground flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs">
-                  <Sparkles
-                    className="h-2 w-2 sm:h-3 sm:w-3"
-                    aria-hidden="true"
-                  />
-                  <span className="hidden xs:inline">{product.category}</span>
-                  <span className="xs:hidden">
-                    {product.category.split(" ")[0]}
-                  </span>
-                </Badge>
-              </div>
-
-              <motion.div
-                animate={{ opacity: isActive ? 1 : 0.75, y: isActive ? 0 : 4 }}
-                transition={{ duration: 0.3 }}
-                className="absolute inset-x-0 bottom-0 p-3 sm:p-5 z-10"
-              >
-                <p className="text-[8px] sm:text-[10px] tracking-widest uppercase text-white/60 mb-0.5 sm:mb-1">
-                  {product.category}
-                </p>
-                <h3 className="text-base sm:text-xl lg:text-2xl font-extrabold text-white leading-tight mb-0.5 sm:mb-1">
-                  {product.name}
-                </h3>
-                <p className="text-[10px] sm:text-xs text-white/75 leading-relaxed line-clamp-2 sm:line-clamp-none">
-                  {product.description}
-                </p>
-              </motion.div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Navigation */}
-      <div className="flex items-center gap-3 sm:gap-4">
-        <button
-          onClick={() => advance(-1)}
-          aria-label="Previous project"
-          className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-border bg-card hover:bg-card/80 hover:border-primary text-foreground flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95"
-        >
-          <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
-        </button>
-
+    <>
+      <div className="flex flex-col items-center gap-6 sm:gap-10 w-full">
+        {/* Card deck */}
         <div
-          className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3"
-          role="tablist"
-          aria-label="Project slides"
+          className={`relative flex items-center justify-center ${dimensions.container}`}
+          role="region"
+          aria-label="Product carousel"
         >
-          {products.map((p, i) => (
-            <button
-              key={i}
-              onClick={() => handleCardClick(i)}
-              role="tab"
-              aria-selected={current === i}
-              aria-label={`Go to ${p.name}`}
-              className="focus:outline-none"
-            >
+          {products.map((product, i) => {
+            const pos = getSpreadPos(i, current, spread, N);
+            if (!pos) return null;
+            const isActive = pos.spreadIdx === 2;
+
+            return (
               <motion.div
+                key={product.id}
+                onClick={() => handleCardClick(i)}
                 animate={{
-                  width: current === i ? 16 : 6,
-                  height: 6,
-                  backgroundColor:
-                    current === i
-                      ? "hsl(var(--primary))"
-                      : "hsl(var(--border))",
+                  rotate: pos.rotate,
+                  x: pos.tx,
+                  y: pos.ty,
+                  scale: pos.scale,
+                  opacity: pos.opacity,
+                  zIndex: pos.zIndex,
                 }}
-                className="rounded-full"
-                transition={{ duration: 0.2 }}
-              />
-            </button>
-          ))}
+                transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                className={`absolute cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl ${dimensions.card}`}
+                style={{
+                  boxShadow: isActive
+                    ? "0 20px 40px rgba(0,0,0,0.25)"
+                    : "0 4px 12px rgba(0,0,0,0.1)",
+                }}
+                aria-label={
+                  isActive
+                    ? `Open ${product.name} gallery`
+                    : `Go to ${product.name}`
+                }
+                role="button"
+                tabIndex={isActive ? 0 : -1}
+                onKeyDown={(e) => {
+                  if (isActive && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    setModalProduct(product);
+                  }
+                }}
+              >
+                <Image
+                  src={product.img}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 85vw, (max-width: 1024px) 340px, 380px"
+                  priority={isActive}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+
+                {/* Category badge */}
+                <div className="absolute top-3 sm:top-5 left-3 sm:left-5 z-10">
+                  <Badge className="bg-primary text-primary-foreground flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs">
+                    <Sparkles
+                      className="h-2 w-2 sm:h-3 sm:w-3"
+                      aria-hidden="true"
+                    />
+                    <span className="hidden xs:inline">{product.category}</span>
+                    <span className="xs:hidden">
+                      {product.category.split(" ")[0]}
+                    </span>
+                  </Badge>
+                </div>
+
+                {/* "View Gallery" pill — only on active card */}
+                {isActive && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.15 }}
+                    className="absolute top-3 sm:top-5 right-3 sm:right-5 z-10"
+                  >
+                    <div className="flex items-center gap-1 bg-black/50 text-white/90 text-[10px] px-2 py-1 rounded-full border border-white/20 backdrop-blur-sm">
+                      <Expand className="h-2.5 w-2.5" aria-hidden="true" />
+                      <span className="hidden sm:inline">View Gallery</span>
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Card text */}
+                <motion.div
+                  animate={{
+                    opacity: isActive ? 1 : 0.75,
+                    y: isActive ? 0 : 4,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-x-0 bottom-0 p-3 sm:p-5 z-10"
+                >
+                  <p className="text-[8px] sm:text-[10px] tracking-widest uppercase text-white/60 mb-0.5 sm:mb-1">
+                    {product.category}
+                  </p>
+                  <h3 className="text-base sm:text-xl lg:text-2xl font-extrabold text-white leading-tight mb-0.5 sm:mb-1">
+                    {product.name}
+                  </h3>
+                  <p className="text-[10px] sm:text-xs text-white/75 leading-relaxed line-clamp-2 sm:line-clamp-none">
+                    {product.description}
+                  </p>
+                </motion.div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <button
-          onClick={() => advance(1)}
-          aria-label="Next project"
-          className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-border bg-card hover:bg-card/80 hover:border-primary text-foreground flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95"
+        {/* Navigation */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          <button
+            onClick={() => advance(-1)}
+            aria-label="Previous project"
+            className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-border bg-card hover:bg-card/80 hover:border-primary text-foreground flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95"
+          >
+            <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+
+          <div
+            className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3"
+            role="tablist"
+            aria-label="Project slides"
+          >
+            {products.map((p, i) => (
+              <button
+                key={i}
+                onClick={() => handleCardClick(i)}
+                role="tab"
+                aria-selected={current === i}
+                aria-label={`Go to ${p.name}`}
+                className="focus:outline-none"
+              >
+                <motion.div
+                  animate={{
+                    width: current === i ? 16 : 6,
+                    height: 6,
+                    backgroundColor:
+                      current === i
+                        ? "hsl(var(--primary))"
+                        : "hsl(var(--border))",
+                  }}
+                  className="rounded-full"
+                  transition={{ duration: 0.2 }}
+                />
+              </button>
+            ))}
+          </div>
+
+          <button
+            onClick={() => advance(1)}
+            aria-label="Next project"
+            className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-border bg-card hover:bg-card/80 hover:border-primary text-foreground flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95"
+          >
+            <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+        </div>
+
+        <p
+          className="text-xs sm:text-sm text-muted-foreground tabular-nums"
+          aria-live="polite"
         >
-          <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
-        </button>
+          {current + 1} / {N}
+        </p>
       </div>
 
-      <p
-        className="text-xs sm:text-sm text-muted-foreground tabular-nums"
-        aria-live="polite"
-      >
-        {current + 1} / {N}
-      </p>
-    </div>
+      {/* Gallery modal */}
+      <ProductModal
+        product={modalProduct}
+        onClose={() => setModalProduct(null)}
+      />
+    </>
   );
 }

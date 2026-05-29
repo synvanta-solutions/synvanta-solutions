@@ -4,7 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-
+import { Badge } from "@/components/ui/badge";
+import { Users } from "lucide-react";
 export function GithubIcon() {
   return (
     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
@@ -84,11 +85,15 @@ export default function TeamCards() {
       >
         <div>
           <div className="flex items-center gap-2 mb-4">
-            <div className="h-px w-6 bg-primary" />
-            <span className="text-xs tracking-[0.2em] uppercase font-mono text-primary">
+            <Badge
+              variant="secondary"
+              className="mb-3 sm:mb-5 w-fit text-xs tracking-widest uppercase"
+            >
+              <Users className="mr-1.5 h-3 w-3" />
               Meet the Team
-            </span>
+            </Badge>
           </div>
+
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight text-foreground">
             The people
             <br />

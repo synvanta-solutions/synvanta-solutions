@@ -13,6 +13,7 @@ export interface Product {
   description: string;
   category: string;
   img: string;
+  gallery?: { src: string; caption?: string }[]; // Optional gallery images
 }
 
 export const products: Product[] = [
@@ -22,20 +23,100 @@ export const products: Product[] = [
     description: "Full-featured online store with payment integration",
     category: "Web Development",
     img: "https://picsum.photos/seed/ecom/560/720",
+    gallery: [
+      { src: "https://picsum.photos/seed/ecom/560/720", caption: "Overview" },
+      {
+        src: "https://picsum.photos/seed/ecom1/1200/800",
+        caption: "Product Listing",
+      },
+      {
+        src: "https://picsum.photos/seed/ecom2/1200/800",
+        caption: "Cart & Checkout",
+      },
+      {
+        src: "https://picsum.photos/seed/ecom3/1200/800",
+        caption: "Mobile View",
+      },
+    ],
   },
   {
     id: 2,
     name: "Inventory Management",
     description: "Real-time stock tracking and automated alerts",
     category: "Business Systems",
-    img: "https://picsum.photos/seed/invent/560/720",
+    img: "/demo/inventory-system/light-main-page.webp",
+    gallery: [
+      {
+        src: "/demo/inventory-system/light-main-page.webp",
+        caption: "Main Page",
+      },
+      {
+        src: "/demo/inventory-system/light-inventory-page.webp",
+        caption: "Inventory Page",
+      },
+      {
+        src: "/demo/inventory-system/light-products-page.webp",
+        caption: "Products Page",
+      },
+      {
+        src: "/demo/inventory-system/light-supplier-page.webp",
+        caption: "Suppliers Page",
+      },
+      {
+        src: "/demo/inventory-system/light-orders-page.webp",
+        caption: "Orders Page",
+      },
+      {
+        src: "/demo/inventory-system/light-reports-page.webp",
+        caption: "Reports Page",
+      },
+      {
+        src: "/demo/inventory-system/dark-main-page.webp",
+        caption: "Main Page (Dark Mode)",
+      },
+      {
+        src: "/demo/inventory-system/dark-inventory-page.webp",
+        caption: "Inventory Page (Dark Mode)",
+      },
+      {
+        src: "/demo/inventory-system/dark-products-page.webp",
+        caption: "Products Page (Dark Mode)",
+      },
+      {
+        src: "/demo/inventory-system/dark-supplier-page.webp",
+        caption: "Suppliers Page (Dark Mode)",
+      },
+      {
+        src: "/demo/inventory-system/dark-orders-page.webp",
+        caption: "Orders Page (Dark Mode)",
+      },
+      {
+        src: "/demo/inventory-system/dark-reports-page.webp",
+        caption: "Reports Page (Dark Mode)",
+      },
+    ],
   },
   {
     id: 3,
-    name: "AI Chatbot Solution",
-    description: "Intelligent customer support automation",
+    name: "GIS Web System",
+    description: "Interactive maps with geospatial data visualization",
     category: "AI Integration",
-    img: "https://picsum.photos/seed/aichat/560/720",
+    img: "/demo/gis-system/high-status.webp",
+    gallery: [
+      { src: "/demo/gis-system/low-status.webp", caption: "Low Heatmap" },
+      {
+        src: "/demo/gis-system/moderate-status.webp",
+        caption: "Moderate Heatmap",
+      },
+      {
+        src: "/demo/gis-system/high-status.webp",
+        caption: "High Heatmap",
+      },
+      {
+        src: "/demo/gis-system/very-high-status.webp",
+        caption: "Very High Heatmap ",
+      },
+    ],
   },
   {
     id: 4,
@@ -43,6 +124,21 @@ export const products: Product[] = [
     description: "User-centric iOS and Android experiences",
     category: "UI/UX Design",
     img: "https://picsum.photos/seed/mobileapp/560/720",
+    gallery: [
+      { src: "https://picsum.photos/seed/ecom/560/720", caption: "Overview" },
+      {
+        src: "https://picsum.photos/seed/ecom1/1200/800",
+        caption: "Product Listing",
+      },
+      {
+        src: "https://picsum.photos/seed/ecom2/1200/800",
+        caption: "Cart & Checkout",
+      },
+      {
+        src: "https://picsum.photos/seed/ecom3/1200/800",
+        caption: "Mobile View",
+      },
+    ],
   },
   {
     id: 5,
@@ -50,6 +146,21 @@ export const products: Product[] = [
     description: "Data-driven insights with real-time metrics",
     category: "Business Intelligence",
     img: "https://picsum.photos/seed/analytic/560/720",
+    gallery: [
+      { src: "https://picsum.photos/seed/ecom/560/720", caption: "Overview" },
+      {
+        src: "https://picsum.photos/seed/ecom1/1200/800",
+        caption: "Product Listing",
+      },
+      {
+        src: "https://picsum.photos/seed/ecom2/1200/800",
+        caption: "Cart & Checkout",
+      },
+      {
+        src: "https://picsum.photos/seed/ecom3/1200/800",
+        caption: "Mobile View",
+      },
+    ],
   },
 ];
 
@@ -73,7 +184,7 @@ const Products = () => {
                 <span className="sm:hidden">Portfolio</span>
               </Badge>
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-center leading-[1.2] sm:leading-[1.1] tracking-tight px-2">
-                Our Latest Projects
+                Our Demo Projects
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center px-4 max-w-md sm:max-w-2xl">
                 Explore the systems we've built — from business tools and GIS
