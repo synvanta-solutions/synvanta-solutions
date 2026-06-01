@@ -3,21 +3,29 @@
 // ProductModal.tsx — Gallery Modal Component
 // Opens when a product card is clicked, shows a multi-image lightbox gallery.
 
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { X, ChevronLeft, ChevronRight, ZoomIn, Sparkles } from "lucide-react";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ZoomIn,
+  Sparkles,
+  Monitor,
+  Tablet,
+  Smartphone,
+} from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type { Product } from "@/components/screens/Products";
+import type {
+  Product,
+  ProductGalleryImage,
+  DeviceView,
+} from "@/components/screens/Products";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-
-export interface ProductGalleryImage {
-  src: string;
-  caption?: string;
-}
 
 interface ProductModalProps {
   product: Product | null;
@@ -36,18 +44,21 @@ function buildGallery(product: Product): ProductGalleryImage[] {
     ? (product.img.split("seed/")[1]?.split("/")[0] ?? String(product.id))
     : String(product.id);
   return [
-    { src: product.img, caption: "Overview" },
+    { src: product.img, caption: "Overview", device: "desktop" as DeviceView },
     {
       src: `https://picsum.photos/seed/${seed}a/1600/1000`,
       caption: "Dashboard View",
+      device: "desktop" as DeviceView,
     },
     {
       src: `https://picsum.photos/seed/${seed}b/1600/1000`,
       caption: "Detail Screen",
+      device: "desktop" as DeviceView,
     },
     {
       src: `https://picsum.photos/seed/${seed}c/1600/1000`,
       caption: "Mobile View",
+      device: "mobile" as DeviceView,
     },
   ];
 }
@@ -104,14 +115,34 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [zoomed, setZoomed] = useState(false);
   const [direction, setDirection] = useState<1 | -1>(1);
+  const [activeDevice, setActiveDevice] = useState<DeviceView>("desktop");
+  const [showCaption, setShowCaption] = useState(true);
 
-  const gallery = product ? buildGallery(product) : [];
+  const allImages = product ? buildGallery(product) : [];
+  // Filter by device tag; if no images are tagged, show all (backwards compat)
+  const gallery = allImages.some((img) => img.device)
+    ? allImages.filter((img) => img.device === activeDevice)
+    : allImages;
   const total = gallery.length;
 
   useEffect(() => {
     setActiveIdx(0);
     setZoomed(false);
+    setActiveDevice("desktop");
   }, [product]);
+
+  // Reset index when switching device tabs
+  useEffect(() => {
+    setActiveIdx(0);
+    setZoomed(false);
+  }, [activeDevice]);
+
+  // Show caption for 2 seconds whenever the image changes
+  useEffect(() => {
+    setShowCaption(true);
+    const t = setTimeout(() => setShowCaption(false), 2000);
+    return () => clearTimeout(t);
+  }, [activeIdx, activeDevice]);
 
   const navigate = useCallback(
     (dir: 1 | -1) => {
@@ -150,7 +181,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
   if (!product) return null;
 
-  const activeImage = gallery[activeIdx];
+  const activeImage = gallery[activeIdx] ?? null;
 
   return (
     <AnimatePresence>
@@ -222,42 +253,142 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
               </button>
             </div>
 
-            {/* Main image — takes all remaining height */}
-            <div className="relative flex-1 overflow-hidden">
-              <AnimatePresence mode="popLayout" custom={direction}>
-                <motion.div
-                  key={activeIdx}
-                  custom={direction}
-                  variants={{
-                    enter: (d: number) => ({
-                      x: d * 80,
-                      opacity: 0,
-                      scale: 0.98,
-                    }),
-                    center: { x: 0, opacity: 1, scale: zoomed ? 1.6 : 1 },
-                    exit: (d: number) => ({
-                      x: d * -80,
-                      opacity: 0,
-                      scale: 0.98,
-                    }),
-                  }}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className={`absolute inset-0 ${zoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
-                  onClick={() => setZoomed((z) => !z)}
+            {/* Device Preview Tabs */}
+            <div className="shrink-0 flex items-center justify-center gap-1 px-5 sm:px-8 pt-3 pb-0">
+              {(
+                [
+                  { key: "desktop", label: "Desktop", Icon: Monitor },
+                  { key: "tablet", label: "Tablet", Icon: Tablet },
+                  { key: "mobile", label: "Mobile", Icon: Smartphone },
+                ] as {
+                  key: DeviceView;
+                  label: string;
+                  Icon: React.ElementType;
+                }[]
+              ).map(({ key, label, Icon }) => (
+                <button
+                  key={key}
+                  onClick={() => setActiveDevice(key)}
+                  aria-pressed={activeDevice === key}
+                  className={`
+                    flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium
+                    transition-all duration-200 border
+                    ${
+                      activeDevice === key
+                        ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                        : "bg-background text-muted-foreground border-border hover:text-foreground hover:border-border/80 hover:bg-muted/50"
+                    }
+                  `}
                 >
-                  <Image
-                    src={activeImage.src}
-                    alt={activeImage.caption ?? `${product.name} screenshot`}
-                    fill
-                    className="object-contain"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 92vw, 1280px"
-                    priority
+                  <Icon
+                    className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                    aria-hidden="true"
                   />
-                </motion.div>
-              </AnimatePresence>
+                  <span>{label}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Main image — takes all remaining height */}
+            <div className="relative flex-1 overflow-hidden flex items-center justify-center bg-muted/20">
+              {/* Device frame wrapper */}
+              <div
+                className={`
+                  relative flex items-center justify-center w-full h-full transition-all duration-300
+                  ${activeDevice === "desktop" ? "p-4 sm:p-6" : activeDevice === "tablet" ? "p-4 sm:p-8" : "p-4 sm:p-12"}
+                `}
+              >
+                {/* Device shell */}
+                <div
+                  className={`
+                    relative overflow-hidden transition-all duration-300 shadow-2xl
+                    ${
+                      activeDevice === "desktop"
+                        ? "w-full h-full rounded-lg border-[6px] sm:border-[8px] border-foreground/15 bg-foreground/10"
+                        : activeDevice === "tablet"
+                          ? "h-full max-w-[min(55%,460px)] w-full rounded-[16px] sm:rounded-[20px] border-[8px] sm:border-[10px] border-foreground/15 bg-foreground/10"
+                          : "h-full max-w-[min(28%,220px)] w-full rounded-[24px] sm:rounded-[32px] border-[8px] sm:border-[10px] border-foreground/15 bg-foreground/10"
+                    }
+                  `}
+                >
+                  {/* Camera dot for tablet */}
+                  {activeDevice === "tablet" && (
+                    <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 w-2 h-2 rounded-full bg-foreground/30" />
+                  )}
+
+                  <AnimatePresence mode="popLayout" custom={direction}>
+                    {total === 0 ? (
+                      <motion.div
+                        key="empty"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-muted-foreground"
+                      >
+                        {activeDevice === "desktop" && (
+                          <Monitor className="h-10 w-10 opacity-30" />
+                        )}
+                        {activeDevice === "tablet" && (
+                          <Tablet className="h-10 w-10 opacity-30" />
+                        )}
+                        {activeDevice === "mobile" && (
+                          <Smartphone className="h-10 w-10 opacity-30" />
+                        )}
+                        <p className="text-sm font-medium opacity-50">
+                          No {activeDevice} screenshots available
+                        </p>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key={activeIdx}
+                        custom={direction}
+                        variants={{
+                          enter: (d: number) => ({
+                            x: d * 80,
+                            opacity: 0,
+                            scale: 0.98,
+                          }),
+                          center: { x: 0, opacity: 1, scale: zoomed ? 1.6 : 1 },
+                          exit: (d: number) => ({
+                            x: d * -80,
+                            opacity: 0,
+                            scale: 0.98,
+                          }),
+                        }}
+                        initial="enter"
+                        animate="center"
+                        exit="exit"
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                        }}
+                        className={`absolute inset-0 w-full h-full ${zoomed ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+                        onClick={() => setZoomed((z) => !z)}
+                      >
+                        <Image
+                          src={activeImage.src}
+                          alt={
+                            activeImage.caption ?? `${product.name} screenshot`
+                          }
+                          fill
+                          className="object-cover object-top"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 92vw, 1280px"
+                          priority
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Desktop stand */}
+                {activeDevice === "desktop" && (
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+                    <div className="w-12 sm:w-16 h-3 sm:h-4 bg-foreground/10 rounded-sm" />
+                    <div className="w-20 sm:w-28 h-1.5 sm:h-2 bg-foreground/10 rounded-sm mt-0.5" />
+                  </div>
+                )}
+              </div>
 
               {/* Prev / Next */}
               {total > 1 && (
@@ -291,22 +422,35 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                 </>
               )}
 
-              {/* Zoom hint */}
-              <div className="absolute bottom-3 right-3 z-10 pointer-events-none">
-                <div className="flex items-center gap-1.5 bg-black/55 text-white/75 text-[11px] sm:text-xs px-2.5 py-1.5 rounded-full border border-white/10">
-                  <ZoomIn className="h-3 w-3" />
-                  <span>{zoomed ? "Click to zoom out" : "Click to zoom"}</span>
-                </div>
-              </div>
-
-              {/* Caption */}
-              {activeImage.caption && (
-                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
-                  <span className="bg-black/60 text-white/90 text-xs sm:text-sm px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-sm whitespace-nowrap font-medium">
-                    {activeImage.caption}
-                  </span>
+              {/* Zoom hint — only when there are images */}
+              {activeImage && (
+                <div className="absolute bottom-3 right-3 z-10 pointer-events-none">
+                  <div className="flex items-center gap-1.5 bg-black/55 text-white/75 text-[11px] sm:text-xs px-2.5 py-1.5 rounded-full border border-white/10">
+                    <ZoomIn className="h-3 w-3" />
+                    <span>
+                      {zoomed ? "Click to zoom out" : "Click to zoom"}
+                    </span>
+                  </div>
                 </div>
               )}
+
+              {/* Caption — fades in on image change, disappears after 2s */}
+              <AnimatePresence>
+                {activeImage?.caption && showCaption && (
+                  <motion.div
+                    key={`caption-${activeIdx}-${activeDevice}`}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
+                  >
+                    <span className="bg-black/60 text-white/90 text-xs sm:text-sm px-4 py-1.5 rounded-full border border-white/10 backdrop-blur-sm whitespace-nowrap font-medium">
+                      {activeImage.caption}
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Footer: thumbnails + counter */}
@@ -322,7 +466,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
               />
               <div className="flex items-center justify-between">
                 <p className="text-xs text-muted-foreground tabular-nums">
-                  {activeIdx + 1} / {total}
+                  {total === 0 ? "0 / 0" : `${activeIdx + 1} / ${total}`}
                 </p>
                 <p className="text-[11px] text-muted-foreground hidden sm:block">
                   ← → to navigate · Z to zoom · Esc to close

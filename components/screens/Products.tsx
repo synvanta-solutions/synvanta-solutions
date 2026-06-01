@@ -7,13 +7,21 @@ import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
 import ProductsCarousel from "@/components/organisms/ProductsCarousel";
 
+export type DeviceView = "desktop" | "tablet" | "mobile";
+
+export interface ProductGalleryImage {
+  src: string;
+  caption?: string;
+  device?: DeviceView; // Which device tab this image belongs to
+}
+
 export interface Product {
   id: number;
   name: string;
   description: string;
   category: string;
   img: string;
-  gallery?: { src: string; caption?: string }[]; // Optional gallery images
+  gallery?: ProductGalleryImage[];
 }
 
 export const products: Product[] = [
@@ -24,18 +32,58 @@ export const products: Product[] = [
     category: "Web Development",
     img: "https://picsum.photos/seed/ecom/560/720",
     gallery: [
-      { src: "https://picsum.photos/seed/ecom/560/720", caption: "Overview" },
+      // Desktop
+      {
+        src: "https://picsum.photos/seed/ecom/1200/800",
+        caption: "Overview",
+        device: "desktop",
+      },
       {
         src: "https://picsum.photos/seed/ecom1/1200/800",
         caption: "Product Listing",
+        device: "desktop",
       },
       {
         src: "https://picsum.photos/seed/ecom2/1200/800",
         caption: "Cart & Checkout",
+        device: "desktop",
       },
       {
         src: "https://picsum.photos/seed/ecom3/1200/800",
-        caption: "Mobile View",
+        caption: "Homepage",
+        device: "desktop",
+      },
+      // Tablet
+      {
+        src: "https://picsum.photos/seed/ecomt1/768/1024",
+        caption: "Browse",
+        device: "tablet",
+      },
+      {
+        src: "https://picsum.photos/seed/ecomt2/768/1024",
+        caption: "Product Detail",
+        device: "tablet",
+      },
+      {
+        src: "https://picsum.photos/seed/ecomt3/768/1024",
+        caption: "Checkout",
+        device: "tablet",
+      },
+      // Mobile
+      {
+        src: "https://picsum.photos/seed/ecomm1/390/844",
+        caption: "Home",
+        device: "mobile",
+      },
+      {
+        src: "https://picsum.photos/seed/ecomm2/390/844",
+        caption: "Product",
+        device: "mobile",
+      },
+      {
+        src: "https://picsum.photos/seed/ecomm3/390/844",
+        caption: "Cart",
+        device: "mobile",
       },
     ],
   },
@@ -44,55 +92,190 @@ export const products: Product[] = [
     name: "Inventory Management",
     description: "Real-time stock tracking and automated alerts",
     category: "Business Systems",
-    img: "/demo/inventory-system/light-main-page.webp",
+    img: "/demo/inventory-system/tablet/light-main-page.webp",
     gallery: [
+      // Desktop
       {
-        src: "/demo/inventory-system/light-main-page.webp",
+        src: "/demo/inventory-system/desktop/light-main-page.webp",
         caption: "Main Page",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/light-inventory-page.webp",
+        src: "/demo/inventory-system/desktop/light-inventory-page.webp",
         caption: "Inventory Page",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/light-products-page.webp",
+        src: "/demo/inventory-system/desktop/light-products-page.webp",
         caption: "Products Page",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/light-supplier-page.webp",
+        src: "/demo/inventory-system/desktop/light-suppliers-page.webp",
         caption: "Suppliers Page",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/light-orders-page.webp",
+        src: "/demo/inventory-system/desktop/light-orders-page.webp",
         caption: "Orders Page",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/light-reports-page.webp",
+        src: "/demo/inventory-system/desktop/light-reports-page.webp",
         caption: "Reports Page",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/dark-main-page.webp",
-        caption: "Main Page (Dark Mode)",
+        src: "/demo/inventory-system/desktop/dark-main-page.webp",
+        caption: "Main Page (Dark)",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/dark-inventory-page.webp",
-        caption: "Inventory Page (Dark Mode)",
+        src: "/demo/inventory-system/desktop/dark-inventory-page.webp",
+        caption: "Inventory Page (Dark)",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/dark-products-page.webp",
-        caption: "Products Page (Dark Mode)",
+        src: "/demo/inventory-system/desktop/dark-products-page.webp",
+        caption: "Products Page (Dark)",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/dark-supplier-page.webp",
-        caption: "Suppliers Page (Dark Mode)",
+        src: "/demo/inventory-system/desktop/dark-suppliers-page.webp",
+        caption: "Suppliers Page (Dark)",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/dark-orders-page.webp",
-        caption: "Orders Page (Dark Mode)",
+        src: "/demo/inventory-system/desktop/dark-orders-page.webp",
+        caption: "Orders Page (Dark)",
+        device: "desktop",
       },
       {
-        src: "/demo/inventory-system/dark-reports-page.webp",
-        caption: "Reports Page (Dark Mode)",
+        src: "/demo/inventory-system/desktop/dark-reports-page.webp",
+        caption: "Reports Page (Dark)",
+        device: "desktop",
+      },
+      // Tablet
+      {
+        src: "/demo/inventory-system/tablet/light-main-page.webp",
+        caption: "Main Page",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/light-inventory-page.webp",
+        caption: "Inventory Page",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/light-products-page.webp",
+        caption: "Products Page",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/light-suppliers-page.webp",
+        caption: "Suppliers Page",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/light-orders-page.webp",
+        caption: "Orders Page",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/light-reports-page.webp",
+        caption: "Reports Page",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/dark-main-page.webp",
+        caption: "Main Page (Dark)",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/dark-inventory-page.webp",
+        caption: "Inventory Page (Dark)",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/dark-products-page.webp",
+        caption: "Products Page (Dark)",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/dark-suppliers-page.webp",
+        caption: "Suppliers Page (Dark)",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/dark-orders-page.webp",
+        caption: "Orders Page (Dark)",
+        device: "tablet",
+      },
+      {
+        src: "/demo/inventory-system/tablet/dark-reports-page.webp",
+        caption: "Reports Page (Dark)",
+        device: "tablet",
+      },
+      // Mobile
+      {
+        src: "/demo/inventory-system/mobile/light-main-page.webp",
+        caption: "Main Page",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/light-inventory-page.webp",
+        caption: "Inventory Page",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/light-products-page.webp",
+        caption: "Products Page",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/light-suppliers-page.webp",
+        caption: "Suppliers Page",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/light-orders-page.webp",
+        caption: "Orders Page",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/light-reports-page.webp",
+        caption: "Reports Page",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/dark-main-page.webp",
+        caption: "Main Page (Dark)",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/dark-inventory-page.webp",
+        caption: "Inventory Page (Dark)",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/dark-products-page.webp",
+        caption: "Products Page (Dark)",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/dark-suppliers-page.webp",
+        caption: "Suppliers Page (Dark)",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/dark-orders-page.webp",
+        caption: "Orders Page (Dark)",
+        device: "mobile",
+      },
+      {
+        src: "/demo/inventory-system/mobile/dark-reports-page.webp",
+        caption: "Reports Page (Dark)",
+        device: "mobile",
       },
     ],
   },
@@ -103,18 +286,53 @@ export const products: Product[] = [
     category: "AI Integration",
     img: "/demo/gis-system/high-status.webp",
     gallery: [
-      { src: "/demo/gis-system/low-status.webp", caption: "Low Heatmap" },
+      // Desktop
+      {
+        src: "/demo/gis-system/low-status.webp",
+        caption: "Low Heatmap",
+        device: "desktop",
+      },
       {
         src: "/demo/gis-system/moderate-status.webp",
         caption: "Moderate Heatmap",
+        device: "desktop",
       },
       {
         src: "/demo/gis-system/high-status.webp",
         caption: "High Heatmap",
+        device: "desktop",
       },
       {
         src: "/demo/gis-system/very-high-status.webp",
-        caption: "Very High Heatmap ",
+        caption: "Very High Heatmap",
+        device: "desktop",
+      },
+      // Tablet
+      {
+        src: "/demo/gis-system/low-status.webp",
+        caption: "Low Heatmap",
+        device: "tablet",
+      },
+      {
+        src: "/demo/gis-system/high-status.webp",
+        caption: "High Heatmap",
+        device: "tablet",
+      },
+      {
+        src: "/demo/gis-system/very-high-status.webp",
+        caption: "Very High Heatmap",
+        device: "tablet",
+      },
+      // Mobile
+      {
+        src: "/demo/gis-system/moderate-status.webp",
+        caption: "Moderate Heatmap",
+        device: "mobile",
+      },
+      {
+        src: "/demo/gis-system/high-status.webp",
+        caption: "High Heatmap",
+        device: "mobile",
       },
     ],
   },
@@ -125,18 +343,53 @@ export const products: Product[] = [
     category: "UI/UX Design",
     img: "https://picsum.photos/seed/mobileapp/560/720",
     gallery: [
-      { src: "https://picsum.photos/seed/ecom/560/720", caption: "Overview" },
+      // Desktop — marketing / overview screens
       {
-        src: "https://picsum.photos/seed/ecom1/1200/800",
-        caption: "Product Listing",
+        src: "https://picsum.photos/seed/appd1/1200/800",
+        caption: "Design Overview",
+        device: "desktop",
       },
       {
-        src: "https://picsum.photos/seed/ecom2/1200/800",
-        caption: "Cart & Checkout",
+        src: "https://picsum.photos/seed/appd2/1200/800",
+        caption: "Component Guide",
+        device: "desktop",
       },
       {
-        src: "https://picsum.photos/seed/ecom3/1200/800",
-        caption: "Mobile View",
+        src: "https://picsum.photos/seed/appd3/1200/800",
+        caption: "Style Guide",
+        device: "desktop",
+      },
+      // Tablet
+      {
+        src: "https://picsum.photos/seed/appt1/768/1024",
+        caption: "Tablet Layout",
+        device: "tablet",
+      },
+      {
+        src: "https://picsum.photos/seed/appt2/768/1024",
+        caption: "Tablet Detail",
+        device: "tablet",
+      },
+      // Mobile — primary target
+      {
+        src: "https://picsum.photos/seed/appm1/390/844",
+        caption: "Onboarding",
+        device: "mobile",
+      },
+      {
+        src: "https://picsum.photos/seed/appm2/390/844",
+        caption: "Home Feed",
+        device: "mobile",
+      },
+      {
+        src: "https://picsum.photos/seed/appm3/390/844",
+        caption: "Profile",
+        device: "mobile",
+      },
+      {
+        src: "https://picsum.photos/seed/appm4/390/844",
+        caption: "Settings",
+        device: "mobile",
       },
     ],
   },
@@ -147,18 +400,48 @@ export const products: Product[] = [
     category: "Business Intelligence",
     img: "https://picsum.photos/seed/analytic/560/720",
     gallery: [
-      { src: "https://picsum.photos/seed/ecom/560/720", caption: "Overview" },
+      // Desktop — primary use case
       {
-        src: "https://picsum.photos/seed/ecom1/1200/800",
-        caption: "Product Listing",
+        src: "https://picsum.photos/seed/anald1/1200/800",
+        caption: "Overview",
+        device: "desktop",
       },
       {
-        src: "https://picsum.photos/seed/ecom2/1200/800",
-        caption: "Cart & Checkout",
+        src: "https://picsum.photos/seed/anald2/1200/800",
+        caption: "Revenue Charts",
+        device: "desktop",
       },
       {
-        src: "https://picsum.photos/seed/ecom3/1200/800",
-        caption: "Mobile View",
+        src: "https://picsum.photos/seed/anald3/1200/800",
+        caption: "User Metrics",
+        device: "desktop",
+      },
+      {
+        src: "https://picsum.photos/seed/anald4/1200/800",
+        caption: "Funnel Analysis",
+        device: "desktop",
+      },
+      // Tablet
+      {
+        src: "https://picsum.photos/seed/analt1/768/1024",
+        caption: "KPI Summary",
+        device: "tablet",
+      },
+      {
+        src: "https://picsum.photos/seed/analt2/768/1024",
+        caption: "Trend View",
+        device: "tablet",
+      },
+      // Mobile
+      {
+        src: "https://picsum.photos/seed/analm1/390/844",
+        caption: "Daily Summary",
+        device: "mobile",
+      },
+      {
+        src: "https://picsum.photos/seed/analm2/390/844",
+        caption: "Alerts",
+        device: "mobile",
       },
     ],
   },
