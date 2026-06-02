@@ -36,8 +36,7 @@ const teamMembers = [
     name: "Gea Cuevas",
     role: "Co-founder & CEO",
     bio: "The bridge between clients and the product. Gea owns client communication, documentation, and user manuals — making sure every deliverable is understood and every client feels heard.",
-    image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face",
+    image: "/team/Gea.webp",
     socials: {
       linkedin: "#",
       twitter: "#",
@@ -46,10 +45,9 @@ const teamMembers = [
   },
   {
     name: "Jerwin Louise Peria",
-    role: "Co-founder & Backend Lead",
+    role: "Co-founder & Backend Developer",
     bio: "The engine under the hood. Jerwin architects and builds the backend systems that power every Synvanta product — reliable, scalable, and built to last.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+    image: "/team/Jerwin.webp",
     socials: {
       linkedin: "#",
       twitter: "#",
@@ -58,10 +56,9 @@ const teamMembers = [
   },
   {
     name: "Aeron James Castillo",
-    role: "Co-founder & Frontend Lead",
+    role: "Co-founder & Frontend Developer",
     bio: "The face of every product. Aeron crafts the interfaces users actually interact with — translating ideas into polished, pixel-perfect UI with a sharp eye for detail.",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face",
+    image: "/team/AJ.webp",
     socials: {
       linkedin: "#",
       twitter: "#",
