@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Users } from "lucide-react";
+
 export function GithubIcon() {
   return (
     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
@@ -36,7 +36,7 @@ const teamMembers = [
     name: "Gea Cuevas",
     role: "Co-founder & CEO",
     bio: "The bridge between clients and the product. Gea owns client communication, documentation, and user manuals — making sure every deliverable is understood and every client feels heard.",
-    image: "/team/Gea.webp",
+    image: "/team/gea.png",
     socials: {
       linkedin: "#",
       twitter: "#",
@@ -47,7 +47,7 @@ const teamMembers = [
     name: "Jerwin Louise Peria",
     role: "Co-founder & Backend Developer",
     bio: "The engine under the hood. Jerwin architects and builds the backend systems that power every Synvanta product — reliable, scalable, and built to last.",
-    image: "/team/Jerwin.webp",
+    image: "/team/jerwin.png",
     socials: {
       linkedin: "#",
       twitter: "#",
@@ -58,7 +58,7 @@ const teamMembers = [
     name: "Aeron James Castillo",
     role: "Co-founder & Frontend Developer",
     bio: "The face of every product. Aeron crafts the interfaces users actually interact with — translating ideas into polished, pixel-perfect UI with a sharp eye for detail.",
-    image: "/team/AJ.webp",
+    image: "/team/aj.png",
     socials: {
       linkedin: "#",
       twitter: "#",
@@ -68,10 +68,8 @@ const teamMembers = [
 ];
 
 export default function TeamCards() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
-    <section className="mx-auto max-w-7xl px-6 lg:px-10 pt-12 sm:pt-16 lg:pt-24 pb-0">
+    <section className="mx-auto max-w-7xl px-6 lg:px-10 py-12 sm:py-16 lg:py-24">
       {/* Section header */}
       <motion.div
         className="mb-10 sm:mb-16 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
@@ -103,8 +101,8 @@ export default function TeamCards() {
         </p>
       </motion.div>
 
-      {/* Cards grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
+      {/* Team grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-7 sm:gap-8">
         {teamMembers.map((member, i) => (
           <motion.div
             key={member.name}
@@ -117,45 +115,48 @@ export default function TeamCards() {
               delay: 0.1 + i * 0.12,
               ease: [0.21, 0.47, 0.32, 0.98],
             }}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
           >
-            {/* Card */}
-            <div className="relative bg-card border border-border rounded-3xl overflow-hidden transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-xl">
-              {/* Photo area — tall, cinematic */}
-              <div className="relative h-72 sm:h-80 w-full overflow-hidden">
+            {/* Image-first, hollow layout */}
+            <div className="relative">
+              {/* Photo area */}
+              <div className="relative h-92 sm:h-80 w-full overflow-hidden transition-all duration-500">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.07]"
-                  style={{ filter: "brightness(0.88) saturate(0.9)" }}
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                  style={{ filter: "brightness(0.96) saturate(0.98)" }}
                 />
 
-                {/* Layered gradient: strong bottom fade + subtle top vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent" />
-
                 {/* Index number — top right */}
-                <div className="absolute top-4 right-4 pointer-events-none">
-                  <span className="text-white/30 font-mono text-xs tracking-widest select-none">
+                <div className="absolute top-3 right-3 pointer-events-none">
+                  <span className="text-black/30 font-mono text-[10px] tracking-widest select-none">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
 
-                {/* Social links — revealed on hover, anchored bottom-right of photo */}
-                <motion.div
-                  className="absolute bottom-4 right-4 flex items-center gap-2"
-                  animate={{
-                    opacity: hoveredIndex === i ? 1 : 0,
-                    y: hoveredIndex === i ? 0 : 8,
-                  }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                >
+              </div>
+
+                <Badge className="mt-4 w-fit bg-white/80 text-foreground border border-white/70 backdrop-blur-sm text-[10px] tracking-[0.18em] uppercase font-mono">
+                  {member.role}
+                </Badge>
+              {/* Body */}
+              <div className="px-1 pb-2 pt-4">
+                {/* Name */}
+                <h3 className="text-lg sm:text-xl font-extrabold text-foreground leading-tight mb-2 tracking-tight">
+                  {member.name}
+                </h3>
+
+                {/* Bio */}
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {member.bio}
+                </p>
+
+                <div className="mt-4 flex items-center gap-3">
                   <Link
                     href={member.socials.linkedin}
                     aria-label="LinkedIn"
-                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm text-white hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-white/20"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/70 backdrop-blur-sm text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-white/60"
                   >
                     <span className="scale-[0.6]">
                       <LinkedinIcon />
@@ -164,7 +165,7 @@ export default function TeamCards() {
                   <Link
                     href={member.socials.github}
                     aria-label="GitHub"
-                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm text-white hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-white/20"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-white/70 backdrop-blur-sm text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-white/60"
                   >
                     <span className="scale-[0.6]">
                       <GithubIcon />
@@ -174,42 +175,15 @@ export default function TeamCards() {
                     <Link
                       href={member.socials.twitter}
                       aria-label="Twitter"
-                      className="flex items-center justify-center w-8 h-8 rounded-full bg-white/15 backdrop-blur-sm text-white hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-white/20"
+                      className="flex items-center justify-center w-8 h-8 rounded-full bg-white/70 backdrop-blur-sm text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-white/60"
                     >
                       <span className="scale-[0.6]">
                         <TwitterIcon />
                       </span>
                     </Link>
                   )}
-                </motion.div>
-              </div>
-
-              {/* Body */}
-              <div className="px-6 pb-6 pt-4">
-                {/* Role pill */}
-                <div className="inline-flex items-center gap-1.5 mb-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span className="text-[10px] tracking-[0.18em] uppercase font-mono text-primary">
-                    {member.role}
-                  </span>
                 </div>
-
-                {/* Name */}
-                <h3 className="text-xl font-extrabold text-foreground leading-tight mb-3 tracking-tight">
-                  {member.name}
-                </h3>
-
-                {/* Thin separator */}
-                <div className="w-8 h-px bg-border mb-3 transition-all duration-300 group-hover:w-12 group-hover:bg-primary" />
-
-                {/* Bio */}
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {member.bio}
-                </p>
               </div>
-
-              {/* Bottom accent bar — slides in on hover */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out rounded-b-3xl" />
             </div>
           </motion.div>
         ))}

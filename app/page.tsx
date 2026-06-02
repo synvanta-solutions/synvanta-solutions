@@ -19,6 +19,21 @@ export default function Home() {
       {/* landmark regions help crawlers understand page structure */}
       <main>
         <Hero />
+        <section
+          id="about"
+          aria-label="About Synvanta"
+          className="scroll-mt-20"
+        >
+          <About />
+        </section>
+
+                <section
+          id="process"
+          aria-label="How we build"
+          className="scroll-mt-20"
+        >
+          <Process />
+        </section>
 
         <section
           id="products"
@@ -28,23 +43,8 @@ export default function Home() {
           <Products />
         </section>
 
-        <section
-          id="process"
-          aria-label="How we build"
-          className="scroll-mt-20"
-        >
-          <Process />
-        </section>
 
         <Team />
-
-        <section
-          id="about"
-          aria-label="About Synvanta"
-          className="scroll-mt-20"
-        >
-          <About />
-        </section>
 
         <section
           id="services"

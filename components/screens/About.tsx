@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import ProjectDialog from "@/components/atoms/ProjectDialog";
 import { useProjectForm } from "@/hooks/useProjectForm";
+import { useSmoothScrollNav } from "@/hooks/useSmoothScrollNav";
+
 // ── Section data ──────────────────────────────────────────────────────────────
 const sections = [
   {
@@ -63,6 +65,7 @@ export default function AboutPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const form = useProjectForm();
+  const { handleNavClick } = useSmoothScrollNav();
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -87,10 +90,11 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <section className="relative">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-4 sm:py-8 lg:py-20">
-          <div className="lg:grid lg:grid-cols-2 lg:gap-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-12 sm:py-16 lg:py-24">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-12 xl:gap-20">
+            
             {/* LEFT — scrolling text panels */}
-            <div className="space-y-0">
+            <div className="space-y-8 sm:space-y-12 lg:space-y-0">
               {sections.map((s, i) => {
                 const Icon = s.icon;
                 return (
@@ -99,7 +103,7 @@ export default function AboutPage() {
                     ref={(el) => {
                       sectionRefs.current[i] = el;
                     }}
-                    className="flex flex-col justify-center py-6 sm:py-8 lg:py-16"
+                    className="flex flex-col justify-center py-8 sm:py-12 lg:py-20 xl:py-24"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
@@ -120,7 +124,7 @@ export default function AboutPage() {
                     >
                       <Badge
                         variant="secondary"
-                        className="mb-3 sm:mb-5 w-fit text-xs tracking-widest uppercase"
+                        className="mb-4 sm:mb-6 w-fit text-xs tracking-widest uppercase"
                       >
                         <Icon className="mr-1.5 h-3 w-3" />
                         {s.badge}
@@ -129,10 +133,10 @@ export default function AboutPage() {
 
                     <motion.h2
                       className={cn(
-                        "text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.2] sm:leading-[1.1] tracking-tight whitespace-pre-line transition-colors duration-500",
+                        "text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-[1.15] sm:leading-[1.1] tracking-tight whitespace-pre-line transition-colors duration-500 mb-4",
                         activeIndex === i
                           ? "text-foreground"
-                          : "text-muted-foreground",
+                          : "text-muted-foreground/60",
                       )}
                       initial={{ opacity: 0, y: 15 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -157,11 +161,11 @@ export default function AboutPage() {
                       }}
                       style={{ originX: 0 }}
                     >
-                      <Separator className="my-4 sm:my-6 w-12 sm:w-16" />
+                      <Separator className="my-5 sm:my-6 w-16 sm:w-20" />
                     </motion.div>
 
                     <motion.p
-                      className="text-muted-foreground leading-relaxed text-sm sm:text-base max-w-md"
+                      className="text-muted-foreground leading-relaxed text-base sm:text-lg max-w-lg"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
@@ -175,7 +179,7 @@ export default function AboutPage() {
                     </motion.p>
 
                     <motion.div
-                      className="mt-5 sm:mt-8"
+                      className="mt-6 sm:mt-8"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
@@ -189,24 +193,51 @@ export default function AboutPage() {
                         <ProjectDialog
                           form={form}
                           trigger={
-                            <Button className="h-9 sm:h-12 cursor-pointer px-5 sm:px-8 md:h-14 md:px-10 flex items-center gap-2 text-sm sm:text-base">
+                            <Button className="h-10 sm:h-11 lg:h-12 cursor-pointer px-6 sm:px-7 lg:px-8 flex items-center gap-2 text-sm sm:text-base">
                               {s.cta.label}{" "}
-                              <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
+                              <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                             </Button>
                           }
                         />
                       ) : (
-                        <Link href={s.cta.href}>
-                          <Button className="h-9 sm:h-12 cursor-pointer px-5 sm:px-8 md:h-14 md:px-10 flex items-center gap-2 text-sm sm:text-base">
+                        <Link href={s.cta.href} onClick={handleNavClick(s.cta.href)}>
+                          <Button className="h-10 sm:h-11 lg:h-12 cursor-pointer px-6 sm:px-7 lg:px-8 flex items-center gap-2 text-sm sm:text-base">
                             {s.cta.label}{" "}
-                            <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
+                            <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           </Button>
                         </Link>
                       )}
                     </motion.div>
 
+                    {/* Mobile image (shows on smaller screens) */}
+                    <motion.div 
+                      className="mt-8 sm:mt-10 lg:hidden relative w-full aspect-[4/3] rounded-xl overflow-hidden"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.2,
+                        ease: [0.21, 0.47, 0.32, 0.98],
+                      }}
+                    >
+                      <Image
+                        src={s.image}
+                        alt={s.badge}
+                        fill
+                        className="object-cover"
+                      />
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: `linear-gradient(135deg, ${s.accent}60 0%, transparent 70%)`,
+                        }}
+                      />
+                    </motion.div>
+
+                    {/* Mobile progress indicators */}
                     <motion.div
-                      className="mt-6 sm:mt-10 flex gap-2 lg:hidden"
+                      className="mt-6 sm:mt-8 flex gap-2 lg:hidden"
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={{ once: true, amount: 0.3 }}
@@ -217,13 +248,19 @@ export default function AboutPage() {
                       }}
                     >
                       {sections.map((_, di) => (
-                        <span
+                        <button
                           key={di}
+                          onClick={() => {
+                            sectionRefs.current[di]?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "center",
+                            });
+                          }}
                           className={cn(
-                            "h-1 rounded-full transition-all duration-300",
+                            "h-1 rounded-full transition-all duration-300 cursor-pointer",
                             di === i
-                              ? "w-5 sm:w-6 bg-primary"
-                              : "w-1 sm:w-1.5 bg-muted-foreground/30",
+                              ? "w-6 bg-primary"
+                              : "w-1.5 bg-muted-foreground/30 hover:bg-muted-foreground/50",
                           )}
                         />
                       ))}
@@ -233,11 +270,11 @@ export default function AboutPage() {
               })}
             </div>
 
-            {/* RIGHT — sticky image panel */}
+            {/* RIGHT — sticky image panel (desktop only) */}
             <div className="hidden lg:block">
               <div className="sticky top-24 flex items-center justify-center min-h-[calc(100vh-6rem)]">
                 <motion.div
-                  className="relative w-full max-w-md aspect-3/4 rounded-2xl overflow-hidden"
+                  className="relative w-full max-w-lg aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl"
                   initial={{ scale: 0.95, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: false, amount: 0.3 }}
@@ -310,7 +347,7 @@ export default function AboutPage() {
 
                   {/* Bottom info bar */}
                   <motion.div
-                    className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-6"
+                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     key={activeIndex}

@@ -64,7 +64,7 @@ interface ServicesProps {
 function Services({ data = servicesData }: ServicesProps) {
   return (
     <section className="bg-background">
-      <div className="py-8 sm:py-12 lg:py-20">
+      <div className="py-12 sm:py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="flex flex-col gap-8 md:gap-16">
             {/* Header — server-rendered */}

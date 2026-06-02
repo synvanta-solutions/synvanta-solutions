@@ -11,6 +11,7 @@ import {
   Mail,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useSmoothScrollNav } from "@/hooks/useSmoothScrollNav";
 
 interface FooterLink {
   name: string;
@@ -102,6 +103,7 @@ const socialLinks = [
 
 const Footer = (props: Props) => {
   const [year, setYear] = useState(new Date().getFullYear());
+  const { handleNavClick, handleLogoClick } = useSmoothScrollNav();
 
   useEffect(() => {
     setYear(new Date().getFullYear());
@@ -123,7 +125,11 @@ const Footer = (props: Props) => {
             {/* Brand column */}
             <div className="col-span-2 mb-8 mr-10 lg:mb-0">
               <div className="flex items-center lg:justify-start">
-                <a href={logo?.url} aria-label="Synvanta home">
+                <a
+                  href={logo?.url}
+                  aria-label="Synvanta home"
+                  onClick={handleLogoClick}
+                >
                   <Image
                     src={logo?.src || "/navbar.png"}
                     alt={logo?.alt || "Synvanta"}
@@ -199,6 +205,7 @@ const Footer = (props: Props) => {
                         >
                           <a
                             href={link.href}
+                            onClick={handleNavClick(link.href)}
                             className={cn(
                               "inline-flex items-center gap-1",
                               isCTA && "group",
@@ -219,7 +226,7 @@ const Footer = (props: Props) => {
           </div>
 
           {/* Bottom bar */}
-          <div className="mt-8 flex flex-col justify-between gap-4 border-t border-border pt-8 text-sm font-sans font-medium text-muted-foreground md:flex-row md:items-center">
+          <div className="mt-8 flex flex-col justify-between gap-4 pt-8 text-sm font-sans font-medium text-muted-foreground md:flex-row md:items-center">
             <p>© {year} Synvanta. All rights reserved.</p>
 
             {/* Legal links (if any) */}

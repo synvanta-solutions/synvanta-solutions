@@ -36,7 +36,7 @@ export default function ProcessCards({ steps }: ProcessCardsProps) {
             />
           )}
 
-          <div className="h-full rounded-3xl border border-border hover:border-primary p-6 bg-card hover:bg-card/80 transition-all duration-300 hover:shadow-xl group">
+          <div className="h-full rounded-3xl shadow-sm p-6 bg-card hover:bg-card/80 transition-all duration-300 hover:shadow-xl group">
             <div className="mb-4">
               <span
                 className="text-5xl font-extrabold text-primary/20 group-hover:text-primary/40 transition-colors duration-300"
@@ -53,13 +53,6 @@ export default function ProcessCards({ steps }: ProcessCardsProps) {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
-            </div>
-
-            <div className="mt-6 inline-flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span className="text-xs font-semibold uppercase tracking-wide">
-                Next
-              </span>
-              <ArrowRight className="w-3 h-3" aria-hidden="true" />
             </div>
           </div>
         </motion.div>

@@ -17,15 +17,27 @@ import {
   Smartphone,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type {
-  Product,
-  ProductGalleryImage,
-  DeviceView,
-} from "@/components/screens/Products";
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
+
+type DeviceView = "desktop" | "tablet" | "mobile";
+
+interface ProductGalleryImage {
+  src: string;
+  caption?: string;
+  device?: DeviceView;
+}
+
+interface Product {
+  id: string | number;
+  name: string;
+  description: string;
+  category: string;
+  img: string;
+  gallery?: ProductGalleryImage[];
+}
 
 interface ProductModalProps {
   product: Product | null;

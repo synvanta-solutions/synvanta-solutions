@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, type MouseEvent } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MenuIcon, XIcon } from "lucide-react";
@@ -8,13 +8,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import ProjectDialog from "@/components/atoms/ProjectDialog";
 import { useProjectForm } from "@/hooks/useProjectForm";
+import { useSmoothScrollNav } from "@/hooks/useSmoothScrollNav";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const NAV_ITEMS = [
-  { title: "Products", href: "#products" },
+    { title: "About Us", href: "#about" },
   { title: "Process", href: "#process" },
-  { title: "About Us", href: "#about" },
+    { title: "Products", href: "#products" },
   { title: "Services", href: "#services" },
 ];
 
@@ -29,6 +30,10 @@ export default function Navbar() {
 
   // All form state and logic lives in the hook — Navbar only wires the dialog
   const form = useProjectForm();
+  const closeMobileMenu = () => setMobileOpen(false);
+  const { handleNavClick, handleLogoClick } = useSmoothScrollNav({
+    onNavigate: closeMobileMenu,
+  });
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -43,24 +48,6 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const closeMobileMenu = () => setMobileOpen(false);
-
-  const handleNavClick =
-    (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-      if (!href.startsWith("#")) return;
-      event.preventDefault();
-      const target = document.querySelector(href);
-      if (!target) return;
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      closeMobileMenu();
-    };
-
-  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    closeMobileMenu();
-  };
 
   return (
     <>
