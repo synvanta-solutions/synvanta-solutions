@@ -27,68 +27,6 @@ export interface Product {
 export const products: Product[] = [
   {
     id: 1,
-    name: "E-Commerce Platform",
-    description: "Full-featured online store with payment integration",
-    category: "Web Development",
-    img: "https://picsum.photos/seed/ecom/560/720",
-    gallery: [
-      // Desktop
-      {
-        src: "https://picsum.photos/seed/ecom/1200/800",
-        caption: "Overview",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/ecom1/1200/800",
-        caption: "Product Listing",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/ecom2/1200/800",
-        caption: "Cart & Checkout",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/ecom3/1200/800",
-        caption: "Homepage",
-        device: "desktop",
-      },
-      // Tablet
-      {
-        src: "https://picsum.photos/seed/ecomt1/768/1024",
-        caption: "Browse",
-        device: "tablet",
-      },
-      {
-        src: "https://picsum.photos/seed/ecomt2/768/1024",
-        caption: "Product Detail",
-        device: "tablet",
-      },
-      {
-        src: "https://picsum.photos/seed/ecomt3/768/1024",
-        caption: "Checkout",
-        device: "tablet",
-      },
-      // Mobile
-      {
-        src: "https://picsum.photos/seed/ecomm1/390/844",
-        caption: "Home",
-        device: "mobile",
-      },
-      {
-        src: "https://picsum.photos/seed/ecomm2/390/844",
-        caption: "Product",
-        device: "mobile",
-      },
-      {
-        src: "https://picsum.photos/seed/ecomm3/390/844",
-        caption: "Cart",
-        device: "mobile",
-      },
-    ],
-  },
-  {
-    id: 2,
     name: "Inventory Management",
     description: "Real-time stock tracking and automated alerts",
     category: "Business Systems",
@@ -280,11 +218,11 @@ export const products: Product[] = [
     ],
   },
   {
-    id: 3,
+    id: 2,
     name: "GIS Web System",
     description: "Interactive maps with geospatial data visualization",
-    category: "AI Integration",
-    img: "/demo/gis-system/high-status.webp",
+    category: "Geospatial Solutions",
+    img: "/demo/gis-system/tablet/sidebar-inactive.webp",
     gallery: [
       // Desktop
       {
@@ -309,138 +247,34 @@ export const products: Product[] = [
       },
       // Tablet
       {
-        src: "/demo/gis-system/low-status.webp",
-        caption: "Low Heatmap",
-        device: "tablet",
-      },
-      {
-        src: "/demo/gis-system/high-status.webp",
-        caption: "High Heatmap",
-        device: "tablet",
-      },
-      {
-        src: "/demo/gis-system/very-high-status.webp",
-        caption: "Very High Heatmap",
-        device: "tablet",
-      },
-      // Mobile
-      {
-        src: "/demo/gis-system/moderate-status.webp",
-        caption: "Moderate Heatmap",
-        device: "mobile",
-      },
-      {
-        src: "/demo/gis-system/high-status.webp",
-        caption: "High Heatmap",
-        device: "mobile",
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: "Mobile App Design",
-    description: "User-centric iOS and Android experiences",
-    category: "UI/UX Design",
-    img: "https://picsum.photos/seed/mobileapp/560/720",
-    gallery: [
-      // Desktop — marketing / overview screens
-      {
-        src: "https://picsum.photos/seed/appd1/1200/800",
-        caption: "Design Overview",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/appd2/1200/800",
-        caption: "Component Guide",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/appd3/1200/800",
-        caption: "Style Guide",
-        device: "desktop",
-      },
-      // Tablet
-      {
-        src: "https://picsum.photos/seed/appt1/768/1024",
-        caption: "Tablet Layout",
-        device: "tablet",
-      },
-      {
-        src: "https://picsum.photos/seed/appt2/768/1024",
-        caption: "Tablet Detail",
-        device: "tablet",
-      },
-      // Mobile — primary target
-      {
-        src: "https://picsum.photos/seed/appm1/390/844",
-        caption: "Onboarding",
-        device: "mobile",
-      },
-      {
-        src: "https://picsum.photos/seed/appm2/390/844",
-        caption: "Home Feed",
-        device: "mobile",
-      },
-      {
-        src: "https://picsum.photos/seed/appm3/390/844",
-        caption: "Profile",
-        device: "mobile",
-      },
-      {
-        src: "https://picsum.photos/seed/appm4/390/844",
-        caption: "Settings",
-        device: "mobile",
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: "Analytics Dashboard",
-    description: "Data-driven insights with real-time metrics",
-    category: "Business Intelligence",
-    img: "https://picsum.photos/seed/analytic/560/720",
-    gallery: [
-      // Desktop — primary use case
-      {
-        src: "https://picsum.photos/seed/anald1/1200/800",
+        src: "/demo/gis-system/tablet/sidebar-inactive.webp",
         caption: "Overview",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/anald2/1200/800",
-        caption: "Revenue Charts",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/anald3/1200/800",
-        caption: "User Metrics",
-        device: "desktop",
-      },
-      {
-        src: "https://picsum.photos/seed/anald4/1200/800",
-        caption: "Funnel Analysis",
-        device: "desktop",
-      },
-      // Tablet
-      {
-        src: "https://picsum.photos/seed/analt1/768/1024",
-        caption: "KPI Summary",
         device: "tablet",
       },
       {
-        src: "https://picsum.photos/seed/analt2/768/1024",
-        caption: "Trend View",
+        src: "/demo/gis-system/tablet/right-sidebar.webp",
+        caption: "Filter Sidebar",
+        device: "tablet",
+      },
+      {
+        src: "/demo/gis-system/tablet/left-sidebar.webp",
+        caption: "Municipality Details",
         device: "tablet",
       },
       // Mobile
       {
-        src: "https://picsum.photos/seed/analm1/390/844",
-        caption: "Daily Summary",
+        src: "/demo/gis-system/mobile/sidebar-inactive.webp",
+        caption: "Overview",
         device: "mobile",
       },
       {
-        src: "https://picsum.photos/seed/analm2/390/844",
-        caption: "Alerts",
+        src: "/demo/gis-system/mobile/filter-active.webp",
+        caption: "High Heatmap",
+        device: "mobile",
+      },
+      {
+        src: "/demo/gis-system/mobile/right-sidebar.webp",
+        caption: "Municipality Details",
         device: "mobile",
       },
     ],
