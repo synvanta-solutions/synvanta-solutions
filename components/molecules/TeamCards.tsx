@@ -33,6 +33,17 @@ export function TwitterIcon() {
 // ── Team member data ──────────────────────────────────────────────────────────
 const teamMembers = [
   {
+    name: "Aeron James Castillo",
+    role: "Co-founder & Frontend Developer",
+    bio: "The face of every product. Aeron crafts the interfaces users actually interact with — translating ideas into polished, pixel-perfect UI with a sharp eye for detail.",
+    image: "/team/aj.png",
+    socials: {
+      linkedin: "#",
+      twitter: "#",
+      github: "#",
+    },
+  },
+  {
     name: "Gea Cuevas",
     role: "Co-founder & CEO",
     bio: "The bridge between clients and the product. Gea owns client communication, documentation, and user manuals — making sure every deliverable is understood and every client feels heard.",
@@ -48,17 +59,6 @@ const teamMembers = [
     role: "Co-founder & Backend Developer",
     bio: "The engine under the hood. Jerwin architects and builds the backend systems that power every Synvanta product — reliable, scalable, and built to last.",
     image: "/team/jerwin.png",
-    socials: {
-      linkedin: "#",
-      twitter: "#",
-      github: "#",
-    },
-  },
-  {
-    name: "Aeron James Castillo",
-    role: "Co-founder & Frontend Developer",
-    bio: "The face of every product. Aeron crafts the interfaces users actually interact with — translating ideas into polished, pixel-perfect UI with a sharp eye for detail.",
-    image: "/team/aj.png",
     socials: {
       linkedin: "#",
       twitter: "#",
@@ -119,12 +119,12 @@ export default function TeamCards() {
             {/* Image-first, hollow layout */}
             <div className="relative">
               {/* Photo area */}
-              <div className="relative h-92 sm:h-80 w-full overflow-hidden transition-all duration-500">
+              <div className="relative w-full h-[500px] overflow-hidden transition-all duration-500">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.06] rounded-lg"
                   style={{ filter: "brightness(0.96) saturate(0.98)" }}
                 />
 
@@ -134,12 +134,11 @@ export default function TeamCards() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
-
               </div>
 
-                <Badge className="mt-4 w-fit bg-white/80 text-foreground border border-white/70 backdrop-blur-sm text-[10px] tracking-[0.18em] uppercase font-mono">
-                  {member.role}
-                </Badge>
+              <Badge className="mt-4 w-fit bg-white/80 text-foreground border border-white/70 backdrop-blur-sm text-[10px] tracking-[0.18em] uppercase font-mono">
+                {member.role}
+              </Badge>
               {/* Body */}
               <div className="px-1 pb-2 pt-4">
                 {/* Name */}
