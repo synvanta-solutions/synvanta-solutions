@@ -3,20 +3,19 @@
 import Link from "next/link";
 import { Zap, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import HeroAnimations from "@/components/organisms/HeroAnimations"; 
-import ProjectDialog from "@/components/atoms/ProjectDialog";
-import { useProjectForm } from "@/hooks/useProjectForm";
+import HeroAnimations from "@/components/organisms/HeroAnimations";
 import { useSmoothScrollNav } from "@/hooks/useSmoothScrollNav";
 
 export default function Hero() {
-  const form = useProjectForm();
   const { handleNavClick } = useSmoothScrollNav();
 
   return (
     <div className="relative min-h-[80vh] mx-auto max-w-7xl flex items-center justify-center overflow-hidden bg-background pt-16 md:pt-0">
-      
       {/* ── Technical Grid Overlay (Using global border variables) ──────── */}
-      <div className="absolute inset-0 grid grid-cols-4 md:grid-cols-12 gap-0 pointer-events-none opacity-40" aria-hidden="true">
+      <div
+        className="absolute inset-0 grid grid-cols-4 md:grid-cols-12 gap-0 pointer-events-none opacity-40"
+        aria-hidden="true"
+      >
         <div className="col-span-1 border-r border-border/40 h-full" />
         <div className="hidden md:block col-span-3 border-r border-border/40 h-full" />
         <div className="hidden md:block col-span-4 border-r border-border/40 h-full" />
@@ -24,7 +23,10 @@ export default function Hero() {
       </div>
 
       {/* ── Ambient Kinetic Lighting ────────────────────────────────────── */}
-      <div className="absolute inset-0 w-full h-full mix-blend-screen" aria-hidden="true">
+      <div
+        className="absolute inset-0 w-full h-full mix-blend-screen"
+        aria-hidden="true"
+      >
         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-primary/10 rounded-full filter blur-[120px] animate-pulse duration-[8s]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-secondary/10 rounded-full filter blur-[140px] animate-pulse duration-[12s] delay-2000" />
       </div>
@@ -34,14 +36,17 @@ export default function Hero() {
 
       {/* ── Main Layout Container (Asymmetric Grid Structure) ───────────── */}
       <div className="container relative z-10 w-full px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-        
         {/* LEFT COLUMN: Deep Typography Stack */}
         <div className="lg:col-span-7 flex flex-col text-left items-start group">
-          
           {/* Micro-interaction Badge */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-md px-4 py-2 text-xs md:text-sm font-medium text-foreground tracking-wide transition-all duration-300 hover:border-primary/40">
-            <Sparkles className="h-3.5 w-3.5 text-primary animate-spin-slow" aria-hidden="true" />
-            <span className="uppercase tracking-widest text-[10px] font-bold text-foreground/80">Innovation meets execution</span>
+            <Sparkles
+              className="h-3.5 w-3.5 text-primary animate-spin-slow"
+              aria-hidden="true"
+            />
+            <span className="uppercase tracking-widest text-[10px] font-bold text-foreground/80">
+              Innovation meets execution
+            </span>
           </div>
 
           {/* Aggressive Typographic Focal Point */}
@@ -54,8 +59,7 @@ export default function Hero() {
         </div>
 
         {/* RIGHT COLUMN: Floating Card Context & Actions */}
-        <div className="lg:col-span-5 flex flex-col items-start space-y-8 border-t lg:border-t-0 lg:border-l border-border/60 pt-8 lg:pt-4 lg:pl-12 backdrop-blur-[2px]">
-          
+        <div className="lg:col-span-5 flex flex-col items-start space-y-8 pt-8 lg:pt-4 lg:pl-4 backdrop-blur-[2px]">
           {/* Contextual Paragraph */}
           <p className="w-full text-base font-normal text-muted-foreground leading-relaxed md:text-lg">
             Synvanta is a freelance-first team delivering pre-built systems and
@@ -65,34 +69,24 @@ export default function Hero() {
 
           {/* Kinetic Interactive Button Suite */}
           <div className="flex flex-col sm:flex-row w-full gap-4">
-            <ProjectDialog
-              form={form}
-              trigger={
-                <Button className="h-14 w-full sm:w-auto cursor-pointer px-8 flex items-center justify-center gap-3 bg-primary text-primary-foreground font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-0.5 active:translate-y-0">
-                  <Zap className="h-4 w-4 fill-current" aria-hidden="true" />
-                  Request a Demo
-                </Button>
-              }
-            />
             <Link
               href="#products"
               aria-label="See Synvanta products"
               onClick={handleNavClick("#products")}
               className="w-full sm:w-auto"
             >
-              <Button
-                variant="outline"
-                className="h-14 w-full sm:w-auto cursor-pointer px-8 flex items-center justify-center gap-3 border-input bg-background text-foreground font-semibold tracking-wide transition-all duration-300 hover:bg-accent hover:text-accent-foreground hover:-translate-y-0.5 active:translate-y-0"
-              >
-                Browse Our Work
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+              <Button className="h-14 w-full sm:w-auto cursor-pointer px-8 flex items-center justify-center gap-3 bg-primary text-primary-foreground font-semibold tracking-wide transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-primary/20 hover:-translate-y-0.5 active:translate-y-0">
+                <Zap className="h-4 w-4 fill-current" aria-hidden="true" />
+                Browse Our Portfolio
+                <ArrowRight
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
               </Button>
             </Link>
           </div>
-          
         </div>
       </div>
-      
     </div>
   );
 }

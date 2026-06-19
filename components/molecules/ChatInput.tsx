@@ -34,7 +34,7 @@ export function ChatInput({
   };
 
   return (
-    <div className="px-3 py-3 border-t border-border bg-background rounded-b-2xl">
+    <div className="px-3 py-3 bg-background rounded-b-2xl">
       <div className="relative flex items-center">
         <input
           ref={inputRef}

@@ -29,7 +29,7 @@ const PromoBanner = ({
 
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-3">
             <p className="text-center text-xs sm:text-sm">
-              Get early access to{" "}
+              Be one of the first to experience{" "}
               <span className="font-semibold">Synvanta Systems</span>
             </p>
 

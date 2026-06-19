@@ -119,12 +119,12 @@ export default function TeamCards() {
             {/* Image-first, hollow layout */}
             <div className="relative">
               {/* Photo area */}
-              <div className="relative w-full h-[500px] overflow-hidden transition-all duration-500">
+              <div className="relative w-full h-[400px] overflow-hidden transition-all duration-500 rounded-3xl">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
-                  className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.06] rounded-lg"
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.06]"
                   style={{ filter: "brightness(0.96) saturate(0.98)" }}
                 />
 

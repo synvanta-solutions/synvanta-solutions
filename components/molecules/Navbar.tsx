@@ -15,7 +15,7 @@ import { useSmoothScrollNav } from "@/hooks/useSmoothScrollNav";
 const NAV_ITEMS = [
     { title: "About Us", href: "#about" },
   { title: "Process", href: "#process" },
-    { title: "Products", href: "#products" },
+    { title: "Portfolio", href: "#products" },
   { title: "Services", href: "#services" },
 ];
 

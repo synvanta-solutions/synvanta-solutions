@@ -55,8 +55,8 @@ const defaultProps: Footer2Props = {
     "Synvanta delivers ready-made and custom systems to help businesses work smarter and grow faster.",
   sections: [
     {
-      title: "Products",
-      links: [{ name: "Demo Projects", href: "#products" }],
+      title: "Portfolio",
+      links: [{ name: "Sample Project", href: "#products" }],
     },
     {
       title: "Services",
