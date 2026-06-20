@@ -35,12 +35,12 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Synvanta" }],
   creator: "Synvanta",
-  metadataBase: new URL("https://www.synvanta.com"),
+  metadataBase: new URL("https://synvanta-solutions.vercel.app/"),
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.synvanta.com",
+    url: "https://synvanta-solutions.vercel.app/",
     siteName: "Synvanta",
     title: "Synvanta — Pre-Built & Custom Business Systems",
     description:
