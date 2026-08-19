@@ -13,9 +13,7 @@ import Footer from "@/components/molecules/Footer";
 export default function Home() {
   return (
     <>
-      <PromoBanner />
       <Navbar />
-
       {/* landmark regions help crawlers understand page structure */}
       <main>
         <Hero />
@@ -24,10 +22,11 @@ export default function Home() {
           aria-label="About Synvanta"
           className="scroll-mt-20"
         >
+          <PromoBanner />
           <About />
         </section>
 
-                <section
+        <section
           id="process"
           aria-label="How we build"
           className="scroll-mt-20"
@@ -42,7 +41,6 @@ export default function Home() {
         >
           <Products />
         </section>
-
 
         <Team />
 

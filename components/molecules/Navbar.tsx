@@ -51,7 +51,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50">
+      <header className="fixed inset-x-0 top-2 z-50 flex justify-center">
         {/* cn() keeps conditional class logic readable and avoids template-literal bugs */}
         <div
           className={cn(
